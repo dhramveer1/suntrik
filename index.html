@@ -14,69 +14,55 @@
   </style>
 </head>
 <body class="bg-white text-gray-800">
-  <!-- Navbar -->
-  <nav class="fixed top-0 left-0 right-0 bg-white shadow z-50">
-    <div class="max-w-9xl mx-auto px-4 flex justify-between items-center py-1">
-      <!-- Logo -->
-      <div class="flex items-center space-x-1">
-        <img src="./abc/logo.png" alt="Suntrik Logo" class="h-16">
-        <span class="font-bold text-[#002B5C] text-2xl md:text-3xl">SUNTRIK</span>
-      </div>
-
-      <!-- Links -->
-      <div class="hidden md:flex items-center space-x-6 font-medium">
-        <a href="#home" class="hover:text-[#FF7A00]">Home</a>
-        <a href="#about" class="hover:text-[#FF7A00]">About Us</a>
-        <a href="#services" class="hover:text-[#FF7A00]">Services</a>
-        <a href="#contact" class="hover:text-[#FF7A00]">Contact</a>
-        <!-- Button -->
-        <a href="https://wa.me/917xxxxxxxxx" target="_blank"
-           class="ml-4 px-6 py-2 font-bold text-white rounded-full bg-gradient-to-r from-green-500 to-green-300 hover:from-green-400 hover:to-green-200 transition">
-          Get Solar
-        </a>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="md:hidden text-[#002B5C] text-3xl focus:outline-none">&#9776;</button>
+ <!-- Navbar -->
+<nav class="fixed top-0 left-0 right-0 bg-white shadow z-50 h-16 flex items-center">
+  <div class="max-w-9xl mx-auto px-4 flex justify-between items-center w-full">
+    <!-- Logo -->
+    <div class="flex items-center space-x-1">
+      <img src="./abc/logo.png" alt="Suntrik Logo" class="h-12">
+      <span class="font-bold text-[#002B5C] text-2xl md:text-3xl">SUNTRIK</span>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="menu" class="hidden md:hidden bg-white shadow-lg px-4 py-4 space-y-3 text-center">
-      <a href="#home" class="block hover:text-[#FF7A00]">Home</a>
-      <a href="#about" class="block hover:text-[#FF7A00]">About Us</a>
-      <a href="#services" class="block hover:text-[#FF7A00]">Services</a>
-      <a href="#contact" class="block hover:text-[#FF7A00]">Contact</a>
+    <!-- Links (Desktop) -->
+    <div class="hidden md:flex items-center space-x-6 font-medium">
+      <a href="#home" class="hover:text-[#FF7A00]">Home</a>
+      <a href="#about" class="hover:text-[#FF7A00]">About Us</a>
+      <a href="#services" class="hover:text-[#FF7A00]">Services</a>
+      <a href="#contact" class="hover:text-[#FF7A00]">Contact</a>
       <a href="https://wa.me/917xxxxxxxxx" target="_blank"
-         class="block px-6 py-2 font-bold text-white rounded-full bg-gradient-to-r from-green-500 to-green-300 hover:from-green-400 hover:to-green-200">
+         class="ml-4 px-6 py-2 font-bold text-white rounded-full bg-gradient-to-r from-green-500 to-green-300 hover:from-green-400 hover:to-green-200 transition">
         Get Solar
       </a>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section id="home" class="relative bg-white text-white min-h-screen pt-20 flex flex-col justify-center items-center text-center px-4">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4"></h1>
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="md:hidden text-[#002B5C] text-3xl focus:outline-none">&#9776;</button>
+  </div>
+</nav>
 
-    <!-- Slider -->
-    <div class="w-full h-full mt-0">
-      <div class="swiper mySwiper aspect-video rounded-xl overflow-hidden">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="./abc/1.jpg" alt="Solar Project 1" class="w-full h-full object-cover hover:scale-105 transition">
-          </div>
-          <div class="swiper-slide">
-            <img src="./abc/2.jpg" alt="Solar Project 2" class="w-full h-full object-cover hover:scale-105 transition">
-          </div>
-          <div class="swiper-slide">
-            <img src="./abc/3.jpg" alt="Solar Project 3" class="w-full h-full object-cover hover:scale-105 transition">
-          </div>
+<!-- Hero Section -->
+<section id="home" 
+  class="relative bg-white text-white min-h-[calc(100vh-64px)] pt-20 flex flex-col justify-center items-center text-center px-4">
+  
+  <div class="w-full h-full mt-0">
+    <div class="swiper mySwiper aspect-video rounded-xl overflow-hidden">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="./abc/1.jpg" alt="Solar Project 1" class="w-full h-full object-cover hover:scale-105 transition">
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <div class="swiper-slide">
+          <img src="./abc/2.jpg" alt="Solar Project 2" class="w-full h-full object-cover hover:scale-105 transition">
+        </div>
+        <div class="swiper-slide">
+          <img src="./abc/3.jpg" alt="Solar Project 3" class="w-full h-full object-cover hover:scale-105 transition">
+        </div>
       </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- About Section -->
   <section id="about" class="bg-[#e6f2f0] pt-32 pb-16 px-4">
