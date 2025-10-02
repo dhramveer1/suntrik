@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — SUNTRIK</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <meta name="description" content="About Suntrik — company profile, leadership, projects, PM-KUSUM, services and contact." />
+  <style>
+    :root { --header-h: 80px; }
+    html { scroll-behavior: smooth; }
+    :target:before { content: ""; display: block; height: var(--header-h); margin-top: calc(-1 * var(--header-h)); }
+    a:focus, button:focus, input:focus { outline: 3px solid rgba(16,185,129,.18); outline-offset:2px; }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased">
+
+  <!-- NAVBAR (same layout & colors as index.html) -->
+  <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- logo -->
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="./abc/logo.png" alt="Suntrik logo" class="h-14 w-auto object-contain">
+          <div>
+            <div class="text-2xl md:text-3xl font-extrabold text-[#002B5C] leading-none">SUNTRIK</div>
+            <div class="text-s text-slate-500">Energy for the Future</div>
+          </div>
+        </a>
+
+        <!-- desktop links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-[#FF7A00]">Home</a>
+          <a href="about.html" class="hover:text-[#FF7A00] text-[#FF7A00] font-semibold">About</a>
+          <a href="services.html" class="hover:text-[#FF7A00]">Services</a>
+          <a href="projects.html" class="hover:text-[#FF7A00]">Projects</a>
+          <a href="contact.html" class="hover:text-[#FF7A00]">Contact</a>
+          <a href="https://wa.me/919876543210" target="_blank" rel="noopener" 
+             class="ml-4 inline-flex items-center px-5 py-2 rounded-full text-white font-bold bg-gradient-to-r from-green-500 to-green-300 hover:brightness-95">
+            Get Solar
+          </a>
+        </nav>
+
+        <!-- mobile menu button -->
+        <div class="md:hidden">
+          <button id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded-md text-2xl">
+            <span id="menu-open">☰</span>
+            <span id="menu-close" class="hidden">✕</span>
+            <span class="sr-only">Open main menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t bg-white/98">
+      <div class="px-4 pt-4 pb-6 space-y-3 text-center">
+        <a href="index.html" class="hover:text-[#FF7A00] block">Home</a>
+        <a href="about.html" class="hover:text-[#FF7A00] block">About</a>
+        <a href="services.html" class="hover:text-[#FF7A00] block">Services</a>
+        <a href="projects.html" class="hover:text-[#FF7A00] block">Projects</a>
+        <a href="contact.html" class="hover:text-[#FF7A00] block">Contact</a>
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="block mt-2 px-6 py-2 rounded-full text-white font-semibold bg-green-500">
+          Get Solar
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20">
+
+    <!-- HERO -->
+    <section class="bg-[url('./abc/about.png')] bg-cover bg-center relative">
+      <div class="absolute inset-0 bg-black/50"></div>
+      <div class="max-w-6xl mx-auto px-4 py-24 relative text-white">
+        <h1 class="text-4xl md:text-5xl font-extrabold">About Suntrik</h1>
+        <p class="mt-4 max-w-3xl text-lg text-white/90">
+          Suntrik is a trusted solar energy solutions provider committed to accelerating India’s transition toward clean, reliable, and sustainable power. We combine deep EPC experience with project execution excellence and customer-focused innovation.
+        </p>
+      </div>
+    </section>
+
+    <!-- AT A GLANCE -->
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-[#002B5C]">At a Glance</h2>
+          <p class="mt-4 text-gray-600">
+            Built on the strengths of Suntrik Solutions (est. 2018) and Suntrik Green Pvt. Ltd. (inc. 2024), we provide end-to-end services — advisory, engineering, turnkey EPC and O&M — for commercial, industrial and rural projects across North India and beyond.
+          </p>
+
+          <div class="mt-6 grid grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow">
+              <div class="text-sm text-slate-500">Founded</div>
+              <div class="font-bold">2018 / 2024</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+              <div class="text-sm text-slate-500">Installed Capacity</div>
+              <div class="font-bold">100 MWp++</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+              <div class="text-sm text-slate-500">Clients Solarized</div>
+              <div class="font-bold">1000+</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+              <div class="text-sm text-slate-500">Orderbook (KUSUM)</div>
+              <div class="font-bold">~80 MW</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <img src="./abc/team.png" alt="Suntrik team" class="w-full h-64 object-cover rounded-xl shadow">
+        </div>
+      </div>
+    </section>
+
+    <!-- VISION / MISSION -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-[#002B5C]">Vision</h3>
+          <p class="mt-3 text-gray-700">To lead India’s transition towards clean energy by delivering intelligent, affordable, and future-ready solar power solutions.</p>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-[#002B5C]">Mission</h3>
+          <p class="mt-3 text-gray-700">To provide customized, end-to-end solar solutions that deliver long-term value, operational excellence, and environmental impact for our clients and communities.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE VALUES -->
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <h3 class="text-2xl font-bold">Core Values</h3>
+        <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="bg-white p-5 rounded-lg shadow">
+            <h4 class="font-semibold">Integrity</h4>
+            <p class="text-sm text-gray-600 mt-2">Transparency and ethical business practices.</p>
+          </div>
+          <div class="bg-white p-5 rounded-lg shadow">
+            <h4 class="font-semibold">Customer-Centricity</h4>
+            <p class="text-sm text-gray-600 mt-2">Tailored solutions aligned with client goals.</p>
+          </div>
+          <div class="bg-white p-5 rounded-lg shadow">
+            <h4 class="font-semibold">Sustainability</h4>
+            <p class="text-sm text-gray-600 mt-2">Committed to reducing carbon footprints.</p>
+          </div>
+          <div class="bg-white p-5 rounded-lg shadow">
+            <h4 class="font-semibold">Collaboration</h4>
+            <p class="text-sm text-gray-600 mt-2">Growing together with partners and communities.</p>
+          </div>
+          <div class="bg-white p-5 rounded-lg shadow">
+            <h4 class="font-semibold">Technical Excellence</h4>
+            <p class="text-sm text-gray-600 mt-2">Data-driven engineering and rigorous project management.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEADERSHIP -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-orange-500 font-semibold uppercase">Leadership</p>
+        <h2 class="text-3xl md:text-4xl font-bold mt-3">Our Leadership Team</h2>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Vinay -->
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
+            <img src="./abc/leader1.jpg" alt="Vinay Bansal" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+            <h3 class="font-semibold">Vinay Bansal</h3>
+            <p class="text-green-600 text-sm font-medium">Director</p>
+            <p class="text-sm text-gray-500 mt-2">29+ years of experience; oversees finance & operations across group companies. AMFI-certified investment advisor.</p>
+          </div>
+
+          <!-- Kapil -->
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
+            <img src="./abc/leader2.jpg" alt="Kapil Vidhani" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+            <h3 class="font-semibold">Kapil Vidhani</h3>
+            <p class="text-green-600 text-sm font-medium">Director</p>
+            <p class="text-sm text-gray-500 mt-2">8+ years in solar distribution and operations; leads Solar One Energy.</p>
+          </div>
+
+          <!-- Rajat -->
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
+            <img src="./abc/leader3.jpg" alt="Rajat Goyal" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+            <h3 class="font-semibold">Rajat Goyal</h3>
+            <p class="text-green-600 text-sm font-medium">Director</p>
+            <p class="text-sm text-gray-500 mt-2">B.Tech (Industrial Engg), NISE-certified solar engineer; leads operations & technical oversight.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GROUP COMPANIES & PARTNERS -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h3 class="text-2xl font-bold">Group Companies</h3>
+          <ul class="mt-4 space-y-2 text-gray-700">
+            <li>Suntrik (EPC & consulting)</li>
+            <li>Solar One Energy (Trading & distribution)</li>
+            <li>SunMount (Mounting structure manufacturing)</li>
+          </ul>
+
+          <h4 class="mt-6 font-semibold">Partners</h4>
+          <div class="mt-3 flex flex-wrap gap-3">
+            <span class="bg-white p-2 rounded shadow text-sm">Adani</span>
+            <span class="bg-white p-2 rounded shadow text-sm">Polycab</span>
+            <span class="bg-white p-2 rounded shadow text-sm">KEI</span>
+            <span class="bg-white p-2 rounded shadow text-sm">Waaree</span>
+            <span class="bg-white p-2 rounded shadow text-sm">Sungrow</span>
+            <span class="bg-white p-2 rounded shadow text-sm">Wattpower</span>
+          </div>
+        </div>
+
+        <div>
+          <img src="./abc/group.png" alt="group companies" class="w-full h-56 object-cover rounded-lg shadow">
+        </div>
+      </div>
+    </section>
+
+    <!-- JOURNEY / TIMELINE -->
+    <section class="py-12">
+      <div class="max-w-5xl mx-auto px-4">
+        <h3 class="text-2xl font-bold">Our Journey</h3>
+        <ol class="mt-6 space-y-4 list-decimal list-inside text-gray-700">
+          <li>2018 — Established Suntrik for Solar EPC business (Residential & Commercial).</li>
+          <li>2019 — Entered Industrial Solar EPC segment.</li>
+          <li>2021 — Launched SunMount Solutions for solar mounting structures.</li>
+          <li>2023 — Expanded into solar distribution with Solar One Energy.</li>
+          <li>2024 — Set up Bajekan solar structure factory and distribution warehouse.</li>
+          <li>2025 — Execution of 80+ MWp projects under PM-KUSUM (ongoing projects & execution).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS & EMPANELMENTS -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h3 class="text-2xl font-bold">Certifications & Empanelments</h3>
+        <div class="mt-4 grid sm:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded shadow">
+            <h4 class="font-semibold">Certifications</h4>
+            <ul class="mt-2 text-gray-700 list-disc list-inside">
+              <li>ISO Certified</li>
+              <li>NISE Certified</li>
+              <li>Electrical Contractor — Rajasthan & Haryana</li>
+            </ul>
+          </div>
+          <div class="bg-white p-4 rounded shadow">
+            <h4 class="font-semibold">Empanelled With</h4>
+            <ul class="mt-2 text-gray-700 list-disc list-inside">
+              <li>DHBVN, Haryana</li>
+              <li>JDVVNL, Rajasthan (RRECL)</li>
+              <li>PSPCL</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT PREVIEW -->
+    <section id="contact" class="py-12">
+      <div class="max-w-6xl mx-auto px-4 bg-white rounded-lg shadow p-8">
+        <h3 class="text-2xl font-bold text-[#002B5C]">Contact Us</h3>
+        <p class="mt-3 text-gray-700">Suntrik Green Energy Pvt Ltd — Jaipur / Sirsa / Bhanipura. For details and office addresses, please use the contact page.</p>
+
+        <div class="mt-6 grid md:grid-cols-3 gap-4">
+          <div class="p-4 bg-gray-50 rounded">
+            <div class="text-sm text-orange-500 font-semibold">Phone</div>
+            <div class="font-bold mt-1">+91 9876543210</div>
+          </div>
+          <div class="p-4 bg-gray-50 rounded">
+            <div class="text-sm text-orange-500 font-semibold">Email</div>
+            <div class="font-bold mt-1">info@suntrik.com</div>
+          </div>
+          <div class="p-4 bg-gray-50 rounded">
+            <div class="text-sm text-orange-500 font-semibold">WhatsApp</div>
+            <a href="https://wa.me/919876543210" class="font-bold mt-1 inline-block text-green-600">Chat Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#002B5C] text-white py-6 px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div class="text-sm">&copy; 2025 Suntrik. All Rights Reserved.</div>
+        <div class="text-sm mt-2 md:mt-0">Designed by <span class="font-semibold">Dhramveer Joshi</span></div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // mobile menu
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      const openIcon = document.getElementById('menu-open');
+      const closeIcon = document.getElementById('menu-close');
+
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', (!expanded).toString());
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

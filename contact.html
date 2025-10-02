@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — SUNTRIK</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <meta name="description" content="Contact Suntrik — reach out for solar EPC, consulting, PM-KUSUM projects, and partnerships." />
+  <style>
+    :root { --header-h: 80px; }
+    html { scroll-behavior: smooth; }
+    :target:before { content: ""; display: block; height: var(--header-h); margin-top: calc(-1 * var(--header-h)); }
+    a:focus, button:focus, input:focus, textarea:focus {
+      outline: 3px solid rgba(16,185,129,.18);
+      outline-offset:2px;
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- logo -->
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="./abc/logo.png" alt="Suntrik logo" class="h-14 w-auto object-contain">
+          <div>
+            <div class="text-2xl md:text-3xl font-extrabold text-[#002B5C] leading-none">SUNTRIK</div>
+            <div class="text-s text-slate-500">Energy for the Future</div>
+          </div>
+        </a>
+
+        <!-- desktop links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-[#FF7A00]">Home</a>
+          <a href="about.html" class="hover:text-[#FF7A00]">About</a>
+          <a href="services.html" class="hover:text-[#FF7A00]">Services</a>
+          <a href="projects.html" class="hover:text-[#FF7A00]">Projects</a>
+          <a href="contact.html" class="hover:text-[#FF7A00] text-[#FF7A00] font-semibold">Contact</a>
+          <a href="https://wa.me/919876543210" target="_blank" rel="noopener" 
+             class="ml-4 inline-flex items-center px-5 py-2 rounded-full text-white font-bold bg-gradient-to-r from-green-500 to-green-300 hover:brightness-95">
+            Get Solar
+          </a>
+        </nav>
+
+        <!-- mobile menu button -->
+        <div class="md:hidden">
+          <button id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded-md text-2xl">
+            <span id="menu-open">☰</span>
+            <span id="menu-close" class="hidden">✕</span>
+            <span class="sr-only">Open main menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t bg-white/98">
+      <div class="px-4 pt-4 pb-6 space-y-3 text-center">
+        <a href="index.html" class="hover:text-[#FF7A00] block">Home</a>
+        <a href="about.html" class="hover:text-[#FF7A00] block">About</a>
+        <a href="services.html" class="hover:text-[#FF7A00] block">Services</a>
+        <a href="projects.html" class="hover:text-[#FF7A00] block">Projects</a>
+        <a href="contact.html" class="hover:text-[#FF7A00] block">Contact</a>
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="block mt-2 px-6 py-2 rounded-full text-white font-semibold bg-green-500">
+          Get Solar
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-20">
+
+    <!-- HERO -->
+    <section class="bg-[url('./abc/con1.jpg')] bg-cover bg-center relative">
+      <div class="absolute inset-0 bg-black/50"></div>
+      <div class="max-w-6xl mx-auto px-4 py-24 relative text-white">
+        <h1 class="text-4xl md:text-5xl font-extrabold">Get in Touch</h1>
+        <p class="mt-4 max-w-3xl text-lg text-white/90">
+          Have questions about solar EPC, consulting, or PM-KUSUM projects? Contact Suntrik today — we’re here to help you power a sustainable future.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT INFO -->
+    <section class="py-12">
+      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-lg text-[#002B5C]">📍 Office</h3>
+          <p class="mt-2 text-gray-600">
+            Jaipur HQ <br>
+            Sirsa Office <br>
+            Bhanipura Office
+          </p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-lg text-[#002B5C]">📞 Phone</h3>
+          <p class="mt-2 text-gray-600">+91 9876543210</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <h3 class="font-semibold text-lg text-[#002B5C]">📧 Email</h3>
+          <p class="mt-2 text-gray-600">info@suntrik.com</p>
+        </div>
+      </div>
+
+      <div class="max-w-6xl mx-auto px-4 mt-8 text-center">
+        <a href="https://wa.me/919876543210" target="_blank" class="inline-flex items-center px-6 py-3 rounded-full text-white font-semibold bg-green-500 hover:bg-green-600">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-3xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-center text-[#002B5C]">Send Us a Message</h2>
+        <form class="mt-8 bg-white rounded-lg shadow p-6 space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Your Name</label>
+            <input type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-orange-400">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-orange-400">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-orange-400"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-[#FF7A00] text-white py-3 rounded-lg font-semibold hover:brightness-95">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- … previous parts of contact.html unchanged … -->
+
+    <!-- GOOGLE MAP -->
+    <section class="py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-[#002B5C] mb-4">Find Us on Map</h2>
+        <div class="aspect-w-16 aspect-h-9">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3468.9875696981403!2d75.0252090150567!3d29.525968682106133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3916dd14217e9c1f%3A0x530b0f1358553b7e!2sSuntrik%20Solutions!5e0!3m2!1sen!2sin!4v1696344821234"
+            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+<!-- … then footer, scripts etc. … -->
+
+
+    <!-- FOOTER -->
+    <footer class="bg-[#002B5C] text-white py-6 px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div class="text-sm">&copy; 2025 Suntrik. All Rights Reserved.</div>
+        <div class="text-sm mt-2 md:mt-0">Designed by <span class="font-semibold">Dhramveer Joshi</span></div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      const openIcon = document.getElementById('menu-open');
+      const closeIcon = document.getElementById('menu-close');
+
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', (!expanded).toString());
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
