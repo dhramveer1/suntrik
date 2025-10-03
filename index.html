@@ -57,6 +57,20 @@
 
     /* subtle focus outline */
     a:focus, button:focus, input:focus { outline: 3px solid rgba(16,185,129,.18); outline-offset:2px; }
+
+    /* ---------- Slide-up animation utilities ---------- */
+    .slide-up { opacity: 0; transform: translateY(24px); transition: transform 1500ms cubic-bezier(.22,.9,.3,1), opacity 1200ms ease; }
+    .slide-up.in-view { opacity: 1; transform: translateY(0); }
+
+    /* small performance hint */
+    .will-change-transform { will-change: transform, opacity; }
+
+    /* reduced motion
+       Respect user preference and remove animations if requested
+    */
+    @media (prefers-reduced-motion: reduce) {
+      .slide-up { transition: none !important; transform: none !important; opacity: 1 !important; }
+    }
   </style>
 </head>
 <body class="bg-white text-slate-800 antialiased">
@@ -124,7 +138,7 @@
             <img src="./abc/1.jpg" alt="Solar Project 1" class="">
             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
             <div class="absolute inset-0 flex items-center justify-center px-4">
-              <div class="max-w-4xl text-center">
+              <div class="max-w-4xl text-center slide-up will-change-transform">
                 <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight drop-shadow">
                   Reliable Solar & Energy Storage for Homes & Industry
                 </h1>
@@ -144,7 +158,7 @@
             <img src="./abc/2.jpg" alt="Solar Project 2" class="">
             <div class="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent"></div>
             <div class="absolute inset-0 flex items-center justify-center px-4">
-              <div class="max-w-3xl text-center">
+              <div class="max-w-3xl text-center slide-up will-change-transform">
                 <h2 class="text-3xl md:text-5xl font-extrabold text-white">Ground-mounted utility-scale solutions</h2>
                 <p class="mt-3 text-white/90">We design, build and operate large solar parks with remote monitoring & performance guarantees.</p>
               </div>
@@ -156,7 +170,7 @@
             <img src="./abc/3.jpg" alt="Solar Project 3" class="">
             <div class="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent"></div>
             <div class="absolute inset-0 flex items-center justify-center px-4">
-              <div class="max-w-3xl text-center">
+              <div class="max-w-3xl text-center slide-up will-change-transform">
                 <h2 class="text-3xl md:text-5xl font-extrabold text-white">PM-KUSUM & Farmer Empowerment</h2>
                 <p class="mt-3 text-white/90">Active in major government programs, delivering decentralized solar at scale.</p>
               </div>
@@ -179,22 +193,22 @@
         <div class="relative">
           <div class="absolute inset-0 transform -skew-y-1 bg-green-600 rounded-xl -z-10 opacity-90"></div>
           <div class="relative grid grid-cols-1 md:grid-cols-4 gap-6 p-6">
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 slide-up will-change-transform">
               <img src="./abc/1.jpg" alt="Ground Mounted" class="w-full h-40 object-cover rounded mb-3">
               <h3 class="font-bold text-lg">IPP & Ground Mounted EPC</h3>
               <p class="text-sm text-slate-600">Driving major solar parks with expertise.</p>
             </div>
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 slide-up will-change-transform">
               <img src="./abc/2.jpg" alt="Solar Parks" class="w-full h-40 object-cover rounded mb-3">
               <h3 class="font-bold text-lg">Solar Parks</h3>
               <p class="text-sm text-slate-600">Reliable large scale solutions.</p>
             </div>
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 slide-up will-change-transform">
               <img src="./abc/3.jpg" alt="Rooftop EPC" class="w-full h-40 object-cover rounded mb-3">
               <h3 class="font-bold text-lg">Rooftop EPC Solutions</h3>
               <p class="text-sm text-slate-600">End-to-end sustainable rooftop services.</p>
             </div>
-            <div class="bg-white rounded-xl shadow p-4">
+            <div class="bg-white rounded-xl shadow p-4 slide-up will-change-transform">
               <img src="./abc/shed1.jpg" alt="SHED" class="w-full h-40 object-cover rounded mb-3">
               <h3 class="font-bold text-lg">SHED Mounted Projects</h3>
               <p class="text-sm text-slate-600">Affordable solar for businesses.</p>
@@ -209,13 +223,13 @@
     <!-- PROJECTS -->
     <section id="projects" class="py-16 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4">
-        <div class="text-center mb-10">
+        <div class="text-center mb-10 slide-up will-change-transform">
           <p class="text-orange-500 font-semibold uppercase">Recent Projects</p>
           <h3 class="text-3xl font-bold">Latest Installations</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="rounded-xl overflow-hidden shadow-md bg-white">
+          <div class="rounded-xl overflow-hidden shadow-md bg-white slide-up will-change-transform">
             <img src="./abc/ground1.jpg" alt="Ground Mount" class="w-full h-48 object-cover">
             <div class="p-4">
               <h4 class="font-semibold">Ground Mount EPC Services</h4>
@@ -224,7 +238,7 @@
             </div>
           </div>
 
-          <div class="rounded-xl overflow-hidden shadow-md bg-white">
+          <div class="rounded-xl overflow-hidden shadow-md bg-white slide-up will-change-transform">
             <img src="./abc/rooftop.jpg" alt="Rooftop N P Agro" class="w-full h-48 object-cover">
             <div class="p-4">
               <h4 class="font-semibold">Rooftop EPC — N P Agro</h4>
@@ -239,7 +253,7 @@
 
     <!-- PM KUSUM (uses content from your doc) -->
     <section class="py-12 px-6">
-      <div class="max-w-5xl mx-auto bg-white rounded-lg shadow p-8">
+      <div class="max-w-5xl mx-auto bg-white rounded-lg shadow p-8 slide-up will-change-transform">
         <p class="text-green-700 text-sm uppercase font-semibold">PM-KUSUM</p>
         <h2 class="text-2xl font-bold mt-2"><span class="text-yellow-500">PM Kusum</span> — Solarizing Farmers</h2>
 
@@ -264,22 +278,22 @@
         <h2 class="text-3xl md:text-4xl font-bold mt-3">Our Leadership</h2>
 
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
-            <img src="./abc/leader1.jpg" alt="Vinay Bansal" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center slide-up will-change-transform">
+            <img src="./abc/leader1.jpg" alt="Vinay Bansal" class="w-32 h-40 object-cover mx-auto mb-4">
             <h3 class="font-semibold">Vinay Bansal</h3>
             <p class="text-green-600 text-sm font-medium">Director</p>
             <p class="text-sm text-gray-500 mt-2">29+ years of ops & finance leadership (excerpt).</p>
           </div>
 
-          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
-            <img src="./abc/leader2.jpg" alt="Kapil Vidhani" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center slide-up will-change-transform">
+            <img src="./abc/leader2.jpg" alt="Kapil Vidhani" class="w-32 h-40 object-cover mx-auto mb-4">
             <h3 class="font-semibold">Kapil Vidhani</h3>
             <p class="text-green-600 text-sm font-medium">Director</p>
             <p class="text-sm text-gray-500 mt-2">8+ years in solar distribution & operations.</p>
           </div>
 
-          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
-            <img src="./abc/leader3.jpg" alt="Rajat Goyal" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center slide-up will-change-transform">
+            <img src="./abc/leader3.jpg" alt="Rajat Goyal" class="w-32 h-40 object-cover mx-auto mb-4">
             <h3 class="font-semibold">Rajat Goyal</h3>
             <p class="text-green-600 text-sm font-medium">Director</p>
             <p class="text-sm text-gray-500 mt-2">NISE-certified solar engineer & operations lead.</p>
@@ -291,38 +305,39 @@
     <!-- CONTACT -->
     <section id="contact" class="py-16 bg-gray-50">
       <div class="max-w-6xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold text-[#002B5C] mb-6">Get in Touch</h2>
-        <p class="text-gray-600 mb-6">Let’s power your future with clean energy. Contact us today.</p>
+        <h2 class="text-3xl font-bold text-[#002B5C] mb-6 slide-up will-change-transform">Get in Touch</h2>
+        <p class="text-gray-600 mb-6 slide-up will-change-transform">Let’s power your future with clean energy. Contact us today.</p>
 
         <div class="flex flex-col md:flex-row justify-center gap-6 text-left">
-          <div class="bg-white p-6 rounded-lg shadow w-full md:w-1/3">
+          <div class="bg-white p-6 rounded-lg shadow w-full md:w-1/3 slide-up will-change-transform">
             <h3 class="font-semibold text-lg mb-2 text-[#FF7A00]">Call Us</h3>
             <p class="text-slate-800 font-medium">+91 9876543210</p>
           </div>
 
-          <div class="bg-white p-6 rounded-lg shadow w-full md:w-1/3">
+          <div class="bg-white p-6 rounded-lg shadow w-full md:w-1/3 slide-up will-change-transform">
             <h3 class="font-semibold text-lg mb-2 text-[#FF7A00]">Email</h3>
             <p class="text-slate-800 font-medium">info@suntrik.com</p>
           </div>
 
-          <div class="bg-white p-6 rounded-lg shadow w-full md:w-1/3">
+          <div class="bg-white p-6 rounded-lg shadow w-full md:w-1/3 slide-up will-change-transform">
             <h3 class="font-semibold text-lg mb-2 text-[#FF7A00]">WhatsApp</h3>
             <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="text-green-600 font-semibold">Chat Now</a>
           </div>
         </div>
 
-        <!-- contact form (simple demo - replace action with your endpoint) -->
-        <div class="mt-8 max-w-3xl mx-auto">
-          <form id="contactForm" class="grid grid-cols-1 gap-3" onsubmit="handleSubmit(event)">
-            <input name="name" required placeholder="Full name" class="w-full px-4 py-3 rounded border" />
-            <input name="email" type="email" required placeholder="Email" class="w-full px-4 py-3 rounded border" />
-            <textarea name="message" rows="4" required placeholder="Tell us about your project" class="w-full px-4 py-3 rounded border"></textarea>
-            <div class="text-right">
-              <button type="submit" class="inline-flex items-center px-6 py-3 rounded-full bg-orange-500 text-white font-semibold">Send Message</button>
-            </div>
-          </form>
-        </div>
-      </div>
+        <!-- contact form (connected to Google Sheets via Apps Script) -->
+<<div class="mt-8 max-w-3xl mx-auto slide-up will-change-transform">
+  <form id="contactForm" class="grid grid-cols-1 gap-3">
+    <input id="fullName" name="name" required placeholder="Full name" class="w-full px-4 py-3 rounded border" />
+    <input id="phone" name="phone" required placeholder="Contact No." class="w-full px-4 py-3 rounded border" />
+    <input id="email" name="email" type="email" required placeholder="Email" class="w-full px-4 py-3 rounded border" />
+    <textarea id="message" name="message" rows="4" required placeholder="Tell us about your project" class="w-full px-4 py-3 rounded border"></textarea>
+    <div class="text-right">
+      <button id="submitBtn" type="submit" class="inline-flex items-center px-6 py-3 rounded-full bg-orange-500 text-white font-semibold">Send Message</button>
+    </div>
+    <div id="formStatus" class="mt-2 text-sm"></div>
+  </form>
+</div>
     </section>
 
   <!-- FOOTER -->
@@ -409,9 +424,118 @@
         alert('Thanks ' + (f.name.value || '') + '! We received your message (demo).');
         f.reset();
       };
+
+
+      // ====== Slide-up on scroll (IntersectionObserver) ======
+      const elems = Array.from(document.querySelectorAll('.slide-up'));
+      if ('IntersectionObserver' in window && elems.length) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+
+            // Stagger based on index among siblings for nicer effect
+            const parent = el.parentElement || document;
+            const children = Array.from(parent.querySelectorAll('.slide-up'));
+            const index = Math.max(0, children.indexOf(el));
+            el.style.transitionDelay = (index * 70) + 'ms';
+
+            el.classList.add('in-view');
+            obs.unobserve(el); // animate only once
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+        elems.forEach(el => observer.observe(el));
+      } else {
+        // Fallback for older browsers: show all
+        elems.forEach(el => el.classList.add('in-view'));
+      }
+
+      // Optional: when user navigates with hash links, ensure slide-up triggers for that area
+      window.addEventListener('hashchange', () => {
+        // small timeout to let browser jump first
+        setTimeout(() => {
+          const visible = document.querySelectorAll('.slide-up');
+          visible.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) el.classList.add('in-view');
+          });
+        }, 120);
+      });
+
     });
   </script>
+  <script>
+(function initContactForm() {
+  if (window.__contactFormInit) return;
+  window.__contactFormInit = true;
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa6IvM6cu6CIVnuyjjxPSah1_6aUlc1okxydamig2UzV2gQPFInfd34IGOorY_hEPZDg/exec"; // <-- REPLACE with your /exec URL
+  const SECRET = "1211"; // <-- if you set SECRET in Code.gs, put same string here; otherwise leave empty
+
+  const form = document.getElementById('contactForm');
+  if (!form) { console.warn('contactForm not found'); return; }
+  const status = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    status.textContent = '';
+    submitBtn.disabled = true;
+
+    const payload = {
+      name: document.getElementById('fullName').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      message: document.getElementById('message').value.trim()
+    };
+
+    if (SECRET) payload.secret = SECRET;
+
+    // Basic client validation
+    if (!payload.name || !payload.email || !payload.message || !payload.phone) {
+      status.textContent = 'Please complete all fields.';
+      status.className = 'mt-2 text-sm text-red-600';
+      submitBtn.disabled = false;
+      return;
+    }
+
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const text = await res.text();
+      let json;
+      try { json = JSON.parse(text); } catch (err) { json = null; }
+
+      if (!res.ok) {
+        status.textContent = `Server error: ${res.status} ${res.statusText}`;
+        status.className = 'mt-2 text-sm text-red-600';
+        console.error('Network error', res.status, res.statusText, text);
+      } else if (json && json.ok) {
+        status.textContent = '✅ Thanks — your message was received.';
+        status.className = 'mt-2 text-sm text-green-600';
+        form.reset();
+      } else {
+        const errMsg = (json && json.error) ? json.error : (text || 'Unknown server response');
+        status.textContent = '❌ Failed: ' + errMsg;
+        status.className = 'mt-2 text-sm text-red-600';
+        console.error('Server response:', json || text);
+      }
+    } catch (err) {
+      console.error('Fetch error', err);
+      status.textContent = '❌ Network error. Check console.';
+      status.className = 'mt-2 text-sm text-red-600';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+
+
 </body>
 </html>
-
-
