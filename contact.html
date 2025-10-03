@@ -114,27 +114,75 @@
       </div>
     </section>
 
-    <!-- CONTACT FORM -->
-    <section class="py-12 bg-gray-50">
-      <div class="max-w-3xl mx-auto px-4">
-        <h2 class="text-2xl font-bold text-center text-[#002B5C]">Send Us a Message</h2>
-        <form class="mt-8 bg-white rounded-lg shadow p-6 space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Your Name</label>
-            <input type="text" class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-orange-400">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-orange-400">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Message</label>
-            <textarea rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-2 mt-1 focus:ring-2 focus:ring-orange-400"></textarea>
-          </div>
-          <button type="submit" class="w-full bg-[#FF7A00] text-white py-3 rounded-lg font-semibold hover:brightness-95">Send Message</button>
-        </form>
-      </div>
-    </section>
+     <!-- Paste this script just before </body> -->
+<script>
+(function initContact_NoPreflight() {
+  if (window.__contactFormInit) return;
+  window.__contactFormInit = true;
+
+  // YOUR Apps Script web app URL (you provided)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa6IvM6cu6CIVnuyjjxPSah1_6aUlc1okxydamig2UzV2gQPFInfd34IGOorY_hEPZDg/exec";
+  const SECRET = "1211"; // optional: set same secret if you enabled SECRET in Code.gs
+
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus') || (() => {
+    const d = document.createElement('div'); d.id='formStatus'; d.className='mt-2 text-sm'; form.after(d); return d;
+  })();
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (!form) { console.error('contactForm element not found'); return; }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    status.textContent = 'Sending…';
+    status.className = 'mt-2 text-sm text-gray-600';
+    if (submitBtn) submitBtn.disabled = true;
+
+    // Build url-encoded payload (simple request -> avoids CORS preflight)
+    const payload = new URLSearchParams();
+    payload.append('name', document.getElementById('fullName')?.value?.trim() || '');
+    payload.append('phone', document.getElementById('phone')?.value?.trim() || '');
+    payload.append('email', document.getElementById('email')?.value?.trim() || '');
+    payload.append('message', document.getElementById('message')?.value?.trim() || '');
+    if (SECRET) payload.append('secret', SECRET);
+
+    try {
+      console.log('Sending payload to Apps Script:', Object.fromEntries(payload.entries()));
+
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: payload // browser sets Content-Type: application/x-www-form-urlencoded automatically
+      });
+
+      const raw = await res.text();
+      console.log('Raw server response:', raw);
+      let json = null;
+      try { json = JSON.parse(raw); } catch (err) { /* not json */ }
+
+      if (!res.ok) {
+        status.textContent = `Server error: ${res.status} ${res.statusText}`;
+        status.className = 'mt-2 text-sm text-red-600';
+        console.error('Server returned non-OK:', raw);
+      } else if (json && json.ok) {
+        status.textContent = '✅ Sent — we received your message.';
+        status.className = 'mt-2 text-sm text-green-600';
+        form.reset();
+      } else {
+        const errMsg = (json && json.error) ? json.error : (raw || 'Unknown server response');
+        status.textContent = '❌ Failed: ' + errMsg;
+        status.className = 'mt-2 text-sm text-red-600';
+        console.error('Unexpected server response:', raw);
+      }
+    } catch (err) {
+      console.error('Fetch exception:', err);
+      status.textContent = '❌ Network / CORS error. See console.';
+      status.className = 'mt-2 text-sm text-red-600';
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
 
     <!-- … previous parts of contact.html unchanged … -->
 
@@ -190,3 +238,4 @@
   </script>
 </body>
 </html>
+
