@@ -115,7 +115,73 @@
     </section>
 
      <!-- Paste this script just before </body> -->
-<script>
+<!-- contact form (connected to Google Sheets via Apps Script) -->
+<<div class="mt-8 max-w-3xl mx-auto slide-up will-change-transform">
+  <form id="contactForm" class="grid grid-cols-1 gap-3">
+    <input id="fullName" name="name" required placeholder="Full name" class="w-full px-4 py-3 rounded border" />
+    <input id="phone" name="phone" required placeholder="Contact No." class="w-full px-4 py-3 rounded border" />
+    <input id="email" name="email" type="email" required placeholder="Email" class="w-full px-4 py-3 rounded border" />
+    <textarea id="message" name="message" rows="4" required placeholder="Tell us about your project" class="w-full px-4 py-3 rounded border"></textarea>
+    <div class="text-right">
+      <button id="submitBtn" type="submit" class="inline-flex items-center px-6 py-3 rounded-full bg-orange-500 text-white font-semibold">Send Message</button>
+    </div>
+    <div id="formStatus" class="mt-2 text-sm"></div>
+  </form>
+</div>
+
+    <!-- … previous parts of contact.html unchanged … -->
+
+    <!-- GOOGLE MAP -->
+    <section class="py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-[#002B5C] mb-4">Find Us on Map</h2>
+        <div class="aspect-w-16 aspect-h-9">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3468.9875696981403!2d75.0252090150567!3d29.525968682106133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3916dd14217e9c1f%3A0x530b0f1358553b7e!2sSuntrik%20Solutions!5e0!3m2!1sen!2sin!4v1696344821234"
+            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+<!-- … then footer, scripts etc. … -->
+
+
+   <!-- FOOTER -->
+<footer class="bg-[#002B5C] text-white py-6 px-6">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+    <div class="text-sm">&copy; 2025 Suntrik. All Rights Reserved.</div>
+    <div class="text-sm mt-2 md:mt-0">
+      Designed by 
+      <a href="https://www.linkedin.com/in/veerjoshi" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="font-semibold underline text-white">
+         Dhramveer Joshi
+      </a>
+    </div>
+  </div>
+</footer>
+</main>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      const openIcon = document.getElementById('menu-open');
+      const closeIcon = document.getElementById('menu-close');
+
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', (!expanded).toString());
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    });
+  </script>
+  <script>
 (function initContact_NoPreflight() {
   if (window.__contactFormInit) return;
   window.__contactFormInit = true;
@@ -183,59 +249,6 @@
   });
 })();
 </script>
-
-    <!-- … previous parts of contact.html unchanged … -->
-
-    <!-- GOOGLE MAP -->
-    <section class="py-12">
-      <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-2xl font-bold text-[#002B5C] mb-4">Find Us on Map</h2>
-        <div class="aspect-w-16 aspect-h-9">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3468.9875696981403!2d75.0252090150567!3d29.525968682106133!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3916dd14217e9c1f%3A0x530b0f1358553b7e!2sSuntrik%20Solutions!5e0!3m2!1sen!2sin!4v1696344821234"
-            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-          ></iframe>
-        </div>
-      </div>
-    </section>
-
-<!-- … then footer, scripts etc. … -->
-
-
-   <!-- FOOTER -->
-<footer class="bg-[#002B5C] text-white py-6 px-6">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-    <div class="text-sm">&copy; 2025 Suntrik. All Rights Reserved.</div>
-    <div class="text-sm mt-2 md:mt-0">
-      Designed by 
-      <a href="https://www.linkedin.com/in/veerjoshi" 
-         target="_blank" 
-         rel="noopener noreferrer" 
-         class="font-semibold underline text-white">
-         Dhramveer Joshi
-      </a>
-    </div>
-  </div>
-</footer>
-</main>
-
-  <!-- SCRIPT -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.getElementById('menu-btn');
-      const menu = document.getElementById('mobile-menu');
-      const openIcon = document.getElementById('menu-open');
-      const closeIcon = document.getElementById('menu-close');
-
-      btn.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', (!expanded).toString());
-        openIcon.classList.toggle('hidden');
-        closeIcon.classList.toggle('hidden');
-      });
-    });
-  </script>
 </body>
 </html>
 
