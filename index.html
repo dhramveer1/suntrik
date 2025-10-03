@@ -465,77 +465,78 @@
 
     });
   </script>
-  <script>
-(function initContactForm() {
+ <!-- Paste this script just before </body> -->
+<script>
+(function initContact_NoPreflight() {
   if (window.__contactFormInit) return;
   window.__contactFormInit = true;
 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa6IvM6cu6CIVnuyjjxPSah1_6aUlc1okxydamig2UzV2gQPFInfd34IGOorY_hEPZDg/exec"; // <-- REPLACE with your /exec URL
-  const SECRET = "1211"; // <-- if you set SECRET in Code.gs, put same string here; otherwise leave empty
+  // YOUR Apps Script web app URL (you provided)
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxa6IvM6cu6CIVnuyjjxPSah1_6aUlc1okxydamig2UzV2gQPFInfd34IGOorY_hEPZDg/exec";
+  const SECRET = "1211"; // optional: set same secret if you enabled SECRET in Code.gs
 
   const form = document.getElementById('contactForm');
-  if (!form) { console.warn('contactForm not found'); return; }
-  const status = document.getElementById('formStatus');
+  const status = document.getElementById('formStatus') || (() => {
+    const d = document.createElement('div'); d.id='formStatus'; d.className='mt-2 text-sm'; form.after(d); return d;
+  })();
   const submitBtn = document.getElementById('submitBtn');
 
-  form.addEventListener('submit', async function (e) {
+  if (!form) { console.error('contactForm element not found'); return; }
+
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    status.textContent = '';
-    submitBtn.disabled = true;
+    status.textContent = 'Sending…';
+    status.className = 'mt-2 text-sm text-gray-600';
+    if (submitBtn) submitBtn.disabled = true;
 
-    const payload = {
-      name: document.getElementById('fullName').value.trim(),
-      phone: document.getElementById('phone').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      message: document.getElementById('message').value.trim()
-    };
-
-    if (SECRET) payload.secret = SECRET;
-
-    // Basic client validation
-    if (!payload.name || !payload.email || !payload.message || !payload.phone) {
-      status.textContent = 'Please complete all fields.';
-      status.className = 'mt-2 text-sm text-red-600';
-      submitBtn.disabled = false;
-      return;
-    }
+    // Build url-encoded payload (simple request -> avoids CORS preflight)
+    const payload = new URLSearchParams();
+    payload.append('name', document.getElementById('fullName')?.value?.trim() || '');
+    payload.append('phone', document.getElementById('phone')?.value?.trim() || '');
+    payload.append('email', document.getElementById('email')?.value?.trim() || '');
+    payload.append('message', document.getElementById('message')?.value?.trim() || '');
+    if (SECRET) payload.append('secret', SECRET);
 
     try {
+      console.log('Sending payload to Apps Script:', Object.fromEntries(payload.entries()));
+
       const res = await fetch(SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: payload // browser sets Content-Type: application/x-www-form-urlencoded automatically
       });
 
-      const text = await res.text();
-      let json;
-      try { json = JSON.parse(text); } catch (err) { json = null; }
+      const raw = await res.text();
+      console.log('Raw server response:', raw);
+      let json = null;
+      try { json = JSON.parse(raw); } catch (err) { /* not json */ }
 
       if (!res.ok) {
         status.textContent = `Server error: ${res.status} ${res.statusText}`;
         status.className = 'mt-2 text-sm text-red-600';
-        console.error('Network error', res.status, res.statusText, text);
+        console.error('Server returned non-OK:', raw);
       } else if (json && json.ok) {
-        status.textContent = '✅ Thanks — your message was received.';
+        status.textContent = '✅ Sent — we received your message.';
         status.className = 'mt-2 text-sm text-green-600';
         form.reset();
       } else {
-        const errMsg = (json && json.error) ? json.error : (text || 'Unknown server response');
+        const errMsg = (json && json.error) ? json.error : (raw || 'Unknown server response');
         status.textContent = '❌ Failed: ' + errMsg;
         status.className = 'mt-2 text-sm text-red-600';
-        console.error('Server response:', json || text);
+        console.error('Unexpected server response:', raw);
       }
     } catch (err) {
-      console.error('Fetch error', err);
-      status.textContent = '❌ Network error. Check console.';
+      console.error('Fetch exception:', err);
+      status.textContent = '❌ Network / CORS error. See console.';
       status.className = 'mt-2 text-sm text-red-600';
     } finally {
-      submitBtn.disabled = false;
+      if (submitBtn) submitBtn.disabled = false;
     }
   });
 })();
 </script>
 
 
+
 </body>
 </html>
+
