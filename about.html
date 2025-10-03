@@ -14,7 +14,27 @@
     html { scroll-behavior: smooth; }
     :target:before { content: ""; display: block; height: var(--header-h); margin-top: calc(-1 * var(--header-h)); }
     a:focus, button:focus, input:focus { outline: 3px solid rgba(16,185,129,.18); outline-offset:2px; }
+	/* ---------- Slide-up animation utilities ---------- */
+.slide-up { 
+  opacity: 0; 
+  transform: translateY(24px); 
+  transition: transform 1500ms cubic-bezier(.22,.9,.3,1), opacity 1200ms ease; 
+}
+.slide-up.in-view { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+/* small perf hint */
+.will-change-transform { will-change: transform, opacity; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slide-up { transition: none !important; transform: none !important; opacity: 1 !important; }
+}
+
   </style>
+  
 </head>
 <body class="bg-white text-slate-800 antialiased">
 
@@ -73,11 +93,11 @@
   <main class="pt-20">
 
     <!-- HERO -->
-    <section class="bg-[url('./abc/about.png')] bg-cover bg-center relative">
+    <section class="bg-[url('./abc/about.png')] bg-cover bg-center relative ">
       <div class="absolute inset-0 bg-black/50"></div>
       <div class="max-w-6xl mx-auto px-4 py-24 relative text-white">
-        <h1 class="text-4xl md:text-5xl font-extrabold">About Suntrik</h1>
-        <p class="mt-4 max-w-3xl text-lg text-white/90">
+        <h1 class="text-4xl md:text-5xl font-extrabold slide-up will-change-transform">About Suntrik</h1>
+        <p class="mt-4 max-w-3xl text-lg text-white/90 slide-up will-change-transform">
           Suntrik is a trusted solar energy solutions provider committed to accelerating India’s transition toward clean, reliable, and sustainable power. We combine deep EPC experience with project execution excellence and customer-focused innovation.
         </p>
       </div>
@@ -85,7 +105,7 @@
 
     <!-- AT A GLANCE -->
     <section class="py-12">
-      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center slide-up will-change-transform">
         <div>
           <h2 class="text-3xl font-bold text-[#002B5C]">At a Glance</h2>
           <p class="mt-4 text-gray-600">
@@ -169,7 +189,7 @@
 
         <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Vinay -->
-          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center slide-up will-change-transform">
             <img src="./abc/leader1.jpg" alt="Vinay Bansal" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
             <h3 class="font-semibold">Vinay Bansal</h3>
             <p class="text-green-600 text-sm font-medium">Director</p>
@@ -177,7 +197,7 @@
           </div>
 
           <!-- Kapil -->
-          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center slide-up will-change-transform">
             <img src="./abc/leader2.jpg" alt="Kapil Vidhani" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
             <h3 class="font-semibold">Kapil Vidhani</h3>
             <p class="text-green-600 text-sm font-medium">Director</p>
@@ -185,7 +205,7 @@
           </div>
 
           <!-- Rajat -->
-          <div class="bg-gray-50 rounded-lg shadow p-6 text-center">
+          <div class="bg-gray-50 rounded-lg shadow p-6 text-center slide-up will-change-transform">
             <img src="./abc/leader3.jpg" alt="Rajat Goyal" class="w-32 h-32 rounded-full object-cover mx-auto mb-4">
             <h3 class="font-semibold">Rajat Goyal</h3>
             <p class="text-green-600 text-sm font-medium">Director</p>
@@ -218,7 +238,7 @@
         </div>
 
         <div>
-          <img src="./abc/group.png" alt="group companies" class="w-full h-56 object-cover rounded-lg shadow">
+          <img src="./abc/group.png" alt="group companies" class="w-full h-56 object-cover rounded-lg shadow slide-up will-change-transform">
         </div>
       </div>
     </section>
@@ -320,5 +340,49 @@
       });
     });
   </script>
+  <script>
+(function initSlideUp() {
+  // avoid double-init
+  if (window.__suntrikSlideUpInit) return;
+  window.__suntrikSlideUpInit = true;
+
+  const elems = Array.from(document.querySelectorAll('.slide-up'));
+  if (!elems.length) return;
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+
+        // optional stagger based on sibling index
+        const parent = el.parentElement || document;
+        const children = Array.from(parent.querySelectorAll('.slide-up'));
+        const idx = Math.max(0, children.indexOf(el));
+        el.style.transitionDelay = (idx * 70) + 'ms';
+
+        el.classList.add('in-view');
+        obs.unobserve(el); // animate once
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    elems.forEach(el => observer.observe(el));
+  } else {
+    // fallback: reveal all
+    elems.forEach(el => el.classList.add('in-view'));
+  }
+
+  // If user navigates to a hash, trigger check so in-view elements become visible
+  window.addEventListener('hashchange', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.slide-up').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in-view');
+      });
+    }, 120);
+  });
+})();
+</script>
+
 </body>
 </html>
