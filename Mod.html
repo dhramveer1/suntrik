@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Damage Module Receipt Form</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:18px;background:#f7f9fc}
+    .card{background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(10,20,40,0.06);max-width:900px;margin:10px auto}
+    label{display:block;font-weight:600;margin-top:10px}
+    select,input[type=text],input[type=date],textarea{width:100%;padding:8px;border:1px solid #d9e2ef;border-radius:6px;margin-top:6px}
+    .rows{margin-top:12px}
+    .row-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+    .row-item input{flex:1}
+    .row-item select{width:220px}
+    .controls{display:flex;gap:8px;margin-top:10px}
+    button{cursor:pointer;padding:8px 12px;border-radius:6px;border:0}
+    .btn-primary{background:#0d6efd;color:#fff}
+    .btn-secondary{background:#e9eef8;color:#0d2b62}
+    .muted{color:#6b7280;font-size:13px}
+    .hint{font-size:13px;color:#475569;margin-top:6px}
+    .flex{display:flex;gap:12px}
+    .flex .col{flex:1}
+    .small{font-size:13px}
+    .msg{padding:10px;border-radius:6px;margin-top:10px}
+    .msg.success{background:#e6ffed;color:#064e3b}
+    .msg.error{background:#ffe6e6;color:#6b0217}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Damage Module Receipt - Site Entry Form</h2>
+    <p class="muted">Fill this form when broken/damaged PV modules are received on site. Data will be posted to your Google Sheets via Apps Script.</p>
+
+    <form id="damageForm">
+      <!-- 1) Site selection -->
+      <label for="site">1) Choose Site (sheet)</label>
+      <select id="site" name="site" required>
+        <option value="">-- Select site --</option>
+        <option>Tolasar</option>
+        <option>Malsar</option>
+        <option>Girghichiya</option>
+        <option>Sawar</option>
+        <option>Billyubas</option>
+        <option>Bhojasar</option>
+        <option>Nethrana</option>
+        <option>Sumeriya</option>
+      </select>
+      <div class="hint">Choose the sheet name that corresponds to the site (the Google Sheet must have a sheet/tab with the same name).</div>
+
+      <!-- 2) Serial numbers rows -->
+      <label class="rows">2) Module serial numbers & reason (max 10 rows)</label>
+      <div id="rowsContainer">
+        <!-- template row (hidden) -->
+      </div>
+      <div class="controls">
+        <button type="button" id="addRow" class="btn-secondary">+ Add row</button>
+        <button type="button" id="removeRow" class="btn-secondary">− Remove last</button>
+        <div class="muted small">Rows: <span id="rowCount">0</span>/10</div>
+      </div>
+
+      <!-- 3) Pallet No. -->
+      <label for="pallet">3) Pallet No. (from which broken modules received)</label>
+      <input id="pallet" name="pallet" type="text" placeholder="e.g. PLT-2025-001" required>
+
+      <!-- 4) Invoice No. -->
+      <label for="invoice">4) Invoice / Delivery Challan No. (pallet)</label>
+      <input id="invoice" name="invoice" type="text" placeholder="e.g. INV-45987" required>
+
+      <!-- 5) Date received -->
+      <div class="flex">
+        <div class="col">
+          <label for="receivedDate">5) Date of received modules</label>
+          <input id="receivedDate" name="receivedDate" type="date" required>
+          <div class="hint">Select the exact date the pallet arrived on site.</div>
+        </div>
+        <div class="col">
+          <label for="inspectedBy">Inspected by (site engineer)</label>
+          <input id="inspectedBy" name="inspectedBy" type="text" placeholder="Site Engineer name" required>
+        </div>
+      </div>
+
+      <label for="notes">Additional notes (optional)</label>
+      <textarea id="notes" name="notes" rows="3" placeholder="e.g. packaging damaged, photos attached, etc."></textarea>
+
+      <div style="margin-top:14px;display:flex;gap:8px;align-items:center">
+        <button type="submit" class="btn-primary">Submit to Sheet</button>
+        <button type="button" id="resetBtn" class="btn-secondary">Reset</button>
+      </div>
+
+      <div id="messageArea"></div>
+    </form>
+
+    <!-- Field explanations (dot details) -->
+    <section style="margin-top:18px">
+      <h3 style="margin-bottom:6px">Field explanations — details</h3>
+      <ul>
+        <li><strong>Site:</strong> Select which project/site the broken modules belong to. This value is used as the sheet/tab name in your Google Sheets document (so create a sheet/tab with the same name beforehand).</li>
+        <li><strong>Module serial numbers &amp; reason:</strong> Add up to 10 rows. Each row collects the serial number of a damaged module and a reason category. Use the reason to quickly filter types of damage later (Glass break, Cell damage, Junction box, Frame bend, Shipping damage, Other — with a text field).</li>
+        <li><strong>Pallet No.:</strong> The pallet identification number printed on the pallet or packing list. Use a consistent format so pallets can be traced across records.</li>
+        <li><strong>Invoice / Delivery Challan No.:</strong> The supplier invoice or delivery challan number associated with that pallet. Helpful for claims and cross-checking.</li>
+        <li><strong>Date of received modules:</strong> Exact date the pallet arrived on site (use ISO date). This is important for warranty/claims timelines and for sorting records by arrival date.</li>
+        <li><strong>Inspected by:</strong> Name of the site engineer or staff who inspected and recorded the damage.</li>
+        <li><strong>Additional notes:</strong> Free-text field for any extra observations (e.g., "photos saved in folder X", "packaging wet", "customer present").</li>
+        <li><strong>Submit action:</strong> When you press Submit, the form packages each module row into records and posts them to an Apps Script web endpoint (replace the endpoint URL in the script below with your script URL). The Apps Script should accept the payload and append rows to the corresponding sheet/tab.</li>
+      </ul>
+    </section>
+
+    <!-- Template + JS -->
+    <script>
+      const MAX_ROWS = 10;
+      const rowsContainer = document.getElementById('rowsContainer');
+      const rowCountEl = document.getElementById('rowCount');
+      const addRowBtn = document.getElementById('addRow');
+      const removeRowBtn = document.getElementById('removeRow');
+
+      function createRow(index){
+        const wrap = document.createElement('div');
+        wrap.className = 'row-item';
+        wrap.dataset.index = index;
+
+        const sn = document.createElement('input');
+        sn.type = 'text';
+        sn.name = `serial_${index}`;
+        sn.placeholder = 'Module Serial No.';
+        sn.required = true;
+
+        const reason = document.createElement('select');
+        reason.name = `reason_${index}`;
+        reason.required = true;
+        reason.innerHTML = `
+          <option value="">-- Reason --</option>
+          <option>Glass break</option>
+          <option>Cell damage</option>
+          <option>Junction box</option>
+          <option>Frame bend</option>
+          <option>Shipping / Handling</option>
+          <option>Other</option>
+        `;
+
+        const otherText = document.createElement('input');
+        otherText.type = 'text';
+        otherText.name = `other_${index}`;
+        otherText.placeholder = 'If Other, describe...';
+        otherText.className = 'small';
+
+        wrap.appendChild(sn);
+        wrap.appendChild(reason);
+        wrap.appendChild(otherText);
+
+        // show/hide otherText based on reason
+        reason.addEventListener('change', ()=>{
+          otherText.style.display = (reason.value === 'Other') ? 'inline-block' : 'none';
+          if(reason.value !== 'Other') otherText.value = '';
+        });
+        otherText.style.display = 'none';
+        return wrap;
+      }
+
+      function updateRowCount(){
+        rowCountEl.textContent = rowsContainer.children.length;
+      }
+
+      addRowBtn.addEventListener('click', ()=>{
+        if(rowsContainer.children.length >= MAX_ROWS) return alert('Max '+MAX_ROWS+' rows allowed');
+        const idx = rowsContainer.children.length + 1;
+        rowsContainer.appendChild(createRow(idx));
+        updateRowCount();
+      });
+
+      removeRowBtn.addEventListener('click', ()=>{
+        if(rowsContainer.children.length === 0) return;
+        rowsContainer.removeChild(rowsContainer.lastElementChild);
+        updateRowCount();
+      });
+
+      // Add one row by default
+      addRowBtn.click();
+
+      // --- Submit handler ---
+      document.getElementById('damageForm').addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const form = e.target;
+        const site = form.site.value;
+        if(!site){return showMessage('Please select a site','error')}
+
+        // build payload: one record per module row
+        const rows = [];
+        for(let i=0;i<rowsContainer.children.length;i++){
+          const r = rowsContainer.children[i];
+          const idx = r.dataset.index || (i+1);
+          const serial = r.querySelector(`input[name=serial_${idx}]`).value.trim();
+          const reason = r.querySelector(`select[name=reason_${idx}]`).value;
+          const other = r.querySelector(`input[name=other_${idx}]`).value.trim();
+          if(!serial){return showMessage('Please fill all module serial numbers','error')}
+          if(!reason){return showMessage('Please select reason for each module','error')}
+          rows.push({serial, reason: reason === 'Other' ? other || 'Other' : reason});
+        }
+
+        const payload = {
+          site, // sheet/tab name
+          pallet: form.pallet.value.trim(),
+          invoice: form.invoice.value.trim(),
+          receivedDate: form.receivedDate.value,
+          inspectedBy: form.inspectedBy.value.trim(),
+          notes: form.notes.value.trim(),
+          modules: rows
+        };
+
+        // Replace with your Apps Script web app URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzO85RYF_DOvjohwWICOIsrgF_5KqdFP3nBzX6RdZx9tRGsWcpJe6uU-pVleIDF4uyZ/exec';
+
+        try{
+          // Basic validation
+          if(!payload.pallet || !payload.invoice || !payload.receivedDate || !payload.inspectedBy){
+            return showMessage('Please fill all required fields','error');
+          }
+
+          showMessage('Submitting...', '');
+
+          const res = await fetch(APPS_SCRIPT_URL, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(payload)
+          });
+
+          if(!res.ok){
+            const txt = await res.text();
+            throw new Error('Server error: '+res.status+' '+txt);
+          }
+
+          const data = await res.json().catch(()=>null);
+          showMessage('Submitted successfully', 'success');
+          form.reset();
+          // remove extra rows and leave one
+          while(rowsContainer.firstChild) rowsContainer.removeChild(rowsContainer.firstChild);
+          addRowBtn.click();
+
+        }catch(err){
+          console.error(err);
+          showMessage('Submission failed: '+err.message,'error');
+        }
+      });
+
+      function showMessage(text, type){
+        const area = document.getElementById('messageArea');
+        area.innerHTML = '';
+        if(!text) return;
+        const div = document.createElement('div');
+        div.className = 'msg '+(type==='success'? 'success' : type==='error'? 'error' : '');
+        div.textContent = text;
+        area.appendChild(div);
+      }
+
+      document.getElementById('resetBtn').addEventListener('click', ()=>{
+        document.getElementById('damageForm').reset();
+        while(rowsContainer.firstChild) rowsContainer.removeChild(rowsContainer.firstChild);
+        addRowBtn.click();
+        showMessage('Form reset','');
+      });
+    </script>
+  </div>
+</body>
+</html>
