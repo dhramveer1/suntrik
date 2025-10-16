@@ -7,95 +7,52 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* 🌞 Light Theme Color Palette (Editable) */
-      --bg:#f3f4f6;              /* Page background */
-      --card:#ffffff;            /* Card/Form background */
-      --glass:rgba(0,0,0,0.03);  /* Subtle background for rows */
-
-      /* Text colors */
-      --text-main:#111827;       /* Main text color */
-      --text-muted:#4b5563;      /* Muted text */
-      --text-heading:#1e3a8a;    /* Label headings */
-
-      /* Accent colors */
-      --accent:#2563eb;          /* Blue accent */
-      --accent-2:#7c3aed;        /* Violet accent */
-
-      /* Status colors */
-      --success:#15803d;         /* Green for success */
-      --danger:#dc2626;          /* Red for error */
-
-      --radius:12px;             /* Border radius */
+      --bg:#f3f4f6; --card:#ffffff; --glass:rgba(0,0,0,0.03);
+      --text-main:#111827; --text-muted:#4b5563; --text-heading:#1e3a8a;
+      --accent:#2563eb; --accent-2:#7c3aed; --success:#15803d; --danger:#dc2626;
+      --radius:12px;
     }
-
     *{box-sizing:border-box}
     body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text-main);margin:24px}
     .wrap{max-width:980px;margin:18px auto;padding:18px}
     .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.1);border:1px solid rgba(0,0,0,0.05)}
-    h2{margin:0 0 8px 0;font-weight:700;color:var(--text-heading)}
-    p.muted{color:var(--text-muted);margin-top:4px}
-
     label{display:block;font-weight:600;margin-top:12px;color:var(--text-heading)}
     select,input[type=text],input[type=date],textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;color:var(--text-main);margin-top:6px}
-    textarea{min-height:84px}
-
-    .rows{margin-top:12px}
-    #rowsContainer{margin-top:8px}
     .row-item{display:flex;gap:10px;align-items:center;margin-bottom:8px;background:var(--glass);padding:8px;border-radius:8px}
     .row-item input[type=text]{flex:1;min-width:140px}
     .row-item select{width:210px}
     .row-item .btn-del{background:transparent;border:0;color:var(--danger);padding:6px;border-radius:6px;cursor:pointer;font-size:18px}
-    .row-item .btn-del:hover{background:rgba(0,0,0,0.05)}
-
     .controls{display:flex;gap:10px;margin-top:10px;align-items:center}
     .btn{cursor:pointer;padding:10px 14px;border-radius:10px;border:0;font-weight:600}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;box-shadow:0 6px 18px rgba(37,99,235,0.2)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white}
     .btn-ghost{background:#f9fafb;color:var(--text-main);border:1px solid rgba(0,0,0,0.1)}
     .btn-disabled{opacity:0.35;pointer-events:none}
-
     .info{margin-top:12px;color:var(--text-muted);font-size:13px}
     .flex{display:flex;gap:12px}
     .flex .col{flex:1}
-    .small{font-size:13px}
-
     .message{margin-top:12px}
     .msg{padding:10px;border-radius:8px}
     .msg.success{background:rgba(22,163,74,0.1);color:var(--success)}
     .msg.error{background:rgba(220,38,38,0.1);color:var(--danger)}
-
-    @media (max-width:720px){
-      .row-item{flex-direction:column;align-items:stretch}
-      .row-item select{width:100%}
-    }
-
-    .header-strip{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;margin-bottom:12px;background:linear-gradient(90deg,rgba(37,99,235,0.1),transparent)}
-    .logo-dot{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white}
-    .meta{font-size:13px;color:var(--text-muted)}
+    @media (max-width:720px){ .row-item{flex-direction:column;align-items:stretch} .row-item select{width:100%} }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <div class="header-strip">
-        <div class="logo-dot">DM</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:white">DM</div>
         <div>
           <div style="font-weight:700;color:var(--text-heading)">Damage Module Receipt</div>
-          <div class="meta">Record broken/damaged PV modules received on site</div>
+          <div style="font-size:13px;color:var(--text-muted)">Record broken/damaged PV modules received on site</div>
         </div>
       </div>
 
-      <form id="damageForm">
+      <form id="damageForm" autocomplete="off">
         <label for="site">1) Choose Site (sheet)</label>
         <select id="site" name="site" required>
           <option value="">-- Select site --</option>
-          <option>Tolasar</option>
-          <option>Malsar</option>
-          <option>Girghichiya</option>
-          <option>Sawar</option>
-          <option>Billyubas</option>
-          <option>Bhojasar</option>
-          <option>Nethrana</option>
-          <option>Sumeriya</option>
+          <option>Tolasar</option><option>Malsar</option><option>Girghichiya</option><option>Sawar</option><option>Billyubas</option><option>Bhojasar</option><option>Nethrana</option><option>Sumeriya</option>
         </select>
         <div class="info">Choose the sheet name that corresponds to the site (the Google Sheet must have a tab with the same name).</div>
 
@@ -140,13 +97,17 @@
   </div>
 
   <script>
+    // localStorage key
+    const STORAGE_KEY = 'dm_form_state_v1';
+
     const MAX_ROWS = 10;
     const rowsContainer = document.getElementById('rowsContainer');
     const rowCountEl = document.getElementById('rowCount');
     const addRowBtn = document.getElementById('addRow');
     const removeRowBtn = document.getElementById('removeRow');
 
-    function createRow(index){
+    // create row element (same as before)
+    function createRow(index, data={serial:'', reason:'', other:''}) {
       const wrap = document.createElement('div');
       wrap.className = 'row-item';
       wrap.dataset.index = index;
@@ -156,6 +117,7 @@
       sn.name = `serial_${index}`;
       sn.placeholder = 'Module Serial No.';
       sn.required = true;
+      sn.value = data.serial || '';
 
       const reason = document.createElement('select');
       reason.name = `reason_${index}`;
@@ -169,12 +131,14 @@
         <option>Shipping / Handling</option>
         <option>Other</option>
       `;
+      if(data.reason) reason.value = data.reason;
 
       const otherText = document.createElement('input');
       otherText.type = 'text';
       otherText.name = `other_${index}`;
       otherText.placeholder = 'If Other, describe...';
       otherText.className = 'small';
+      otherText.value = data.other || '';
 
       const delBtn = document.createElement('button');
       delBtn.type = 'button';
@@ -184,13 +148,16 @@
       delBtn.addEventListener('click', ()=>{
         rowsContainer.removeChild(wrap);
         updateRowCount();
+        saveState(); // save after delete
       });
 
+      // on any change -> save state
+      [sn, reason, otherText].forEach(el => el.addEventListener('input', saveState));
       reason.addEventListener('change', ()=>{
         otherText.style.display = (reason.value === 'Other') ? 'inline-block' : 'none';
         if(reason.value !== 'Other') otherText.value = '';
       });
-      otherText.style.display = 'none';
+      otherText.style.display = (data.reason === 'Other') ? 'inline-block' : 'none';
 
       wrap.appendChild(sn);
       wrap.appendChild(reason);
@@ -200,24 +167,106 @@
       return wrap;
     }
 
-    function updateRowCount(){
+    function updateRowCount() {
       const count = rowsContainer.children.length;
       rowCountEl.textContent = count;
-
-      if(count <= 1){ removeRowBtn.style.display = 'none'; } else { removeRowBtn.style.display = 'inline-block'; }
-      if(count >= MAX_ROWS){ addRowBtn.classList.add('btn-disabled'); addRowBtn.disabled = true; } else { addRowBtn.classList.remove('btn-disabled'); addRowBtn.disabled = false; }
-      Array.from(rowsContainer.children).forEach(r=>{ const del=r.querySelector('.btn-del'); if(del) del.style.display=(count<=1)?'none':'inline-block'; });
+      removeRowBtn.style.display = (count <= 1) ? 'none' : 'inline-block';
+      if(count >= MAX_ROWS){ addRowBtn.classList.add('btn-disabled'); addRowBtn.disabled = true; }
+      else { addRowBtn.classList.remove('btn-disabled'); addRowBtn.disabled = false; }
+      Array.from(rowsContainer.children).forEach(r=>{
+        const del = r.querySelector('.btn-del');
+        if(del) del.style.display = (count <= 1) ? 'none' : 'inline-block';
+      });
     }
 
-    addRowBtn.addEventListener('click', ()=>{ if(rowsContainer.children.length>=MAX_ROWS) return; const idx=rowsContainer.children.length+1; rowsContainer.appendChild(createRow(idx)); updateRowCount(); });
-    removeRowBtn.addEventListener('click', ()=>{ if(rowsContainer.children.length<=1) return; rowsContainer.removeChild(rowsContainer.lastElementChild); updateRowCount(); });
-    addRowBtn.click();
+    addRowBtn.addEventListener('click', ()=>{
+      if(rowsContainer.children.length >= MAX_ROWS) return;
+      const idx = rowsContainer.children.length + 1;
+      rowsContainer.appendChild(createRow(idx));
+      updateRowCount();
+      saveState();
+    });
 
+    removeRowBtn.addEventListener('click', ()=>{
+      if(rowsContainer.children.length <= 1) return;
+      rowsContainer.removeChild(rowsContainer.lastElementChild);
+      updateRowCount();
+      saveState();
+    });
+
+    // Save whole form state (rows + main fields) to localStorage
+    function saveState(){
+      try {
+        const rows = Array.from(rowsContainer.children).map((r, i)=>{
+          const idx = r.dataset.index || (i+1);
+          return {
+            serial: r.querySelector(`input[name=serial_${idx}]`)?.value || '',
+            reason: r.querySelector(`select[name=reason_${idx}]`)?.value || '',
+            other: r.querySelector(`input[name=other_${idx}]`)?.value || ''
+          };
+        });
+        const state = {
+          site: document.getElementById('site').value,
+          pallet: document.getElementById('pallet').value,
+          invoice: document.getElementById('invoice').value,
+          receivedDate: document.getElementById('receivedDate').value,
+          inspectedBy: document.getElementById('inspectedBy').value,
+          notes: document.getElementById('notes').value,
+          rows
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.warn('Save state failed', err);
+      }
+    }
+
+    // Restore saved state (if any)
+    function loadState(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) {
+        // default: create one empty row
+        rowsContainer.appendChild(createRow(1));
+        updateRowCount();
+        return;
+      }
+      try {
+        const state = JSON.parse(raw);
+        // fill main fields
+        if(state.site) document.getElementById('site').value = state.site;
+        if(state.pallet) document.getElementById('pallet').value = state.pallet;
+        if(state.invoice) document.getElementById('invoice').value = state.invoice;
+        if(state.receivedDate) document.getElementById('receivedDate').value = state.receivedDate;
+        if(state.inspectedBy) document.getElementById('inspectedBy').value = state.inspectedBy;
+        if(state.notes) document.getElementById('notes').value = state.notes;
+
+        // restore rows
+        const rows = state.rows && state.rows.length ? state.rows : [{serial:'',reason:'',other:''}];
+        rows.forEach((r,i)=>{
+          rowsContainer.appendChild(createRow(i+1, r));
+        });
+        updateRowCount();
+      } catch (err) {
+        console.warn('Load state failed', err);
+        rowsContainer.appendChild(createRow(1));
+        updateRowCount();
+      }
+    }
+
+    // Attach change listeners on main fields to save
+    ['site','pallet','invoice','receivedDate','inspectedBy','notes'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.addEventListener('input', saveState);
+    });
+
+    // Initialize form from storage
+    loadState();
+
+    // Submit handler (same as your previous flow)
     document.getElementById('damageForm').addEventListener('submit', async (e)=>{
       e.preventDefault();
       const form = e.target;
       const site = form.site.value;
-      if(!site){return showMessage('Please select a site','error')}
+      if(!site){ return showMessage('Please select a site','error') }
       const rows = [];
       for(let i=0;i<rowsContainer.children.length;i++){
         const r = rowsContainer.children[i];
@@ -225,29 +274,56 @@
         const serial = r.querySelector(`input[name=serial_${idx}]`).value.trim();
         const reason = r.querySelector(`select[name=reason_${idx}]`).value;
         const other = r.querySelector(`input[name=other_${idx}]`)?.value.trim() || '';
-        if(!serial){return showMessage('Please fill all module serial numbers','error')}
-        if(!reason){return showMessage('Please select reason for each module','error')}
-        rows.push({serial, reason: reason==='Other'?(other||'Other'):reason});
+        if(!serial){ return showMessage('Please fill all module serial numbers','error') }
+        if(!reason){ return showMessage('Please select reason for each module','error') }
+        rows.push({serial, reason: reason === 'Other' ? (other || 'Other') : reason});
       }
-      const payload={site,pallet:form.pallet.value.trim(),invoice:form.invoice.value.trim(),receivedDate:form.receivedDate.value,inspectedBy:form.inspectedBy.value.trim(),notes:form.notes.value.trim(),modules:rows};
-      const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwdZUpCPwNPEIL9kd4ukMuooQoP3zTdEaAvtV4wzYltJLBbEAUzuTP6JrI-9jCiB8MB/exec';
-      try{
-        if(!payload.pallet||!payload.invoice||!payload.receivedDate||!payload.inspectedBy){return showMessage('Please fill all required fields','error');}
+      const payload = {
+        site,
+        pallet: form.pallet.value.trim(),
+        invoice: form.invoice.value.trim(),
+        receivedDate: form.receivedDate.value,
+        inspectedBy: form.inspectedBy.value.trim(),
+        notes: form.notes.value.trim(),
+        modules: rows
+      };
+
+      // replace with your apps script url
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdZUpCPwNPEIL9kd4ukMuooQoP3zTdEaAvtV4wzYltJLBbEAUzuTP6JrI-9jCiB8MB/exec';
+
+      try {
+        if(!payload.pallet || !payload.invoice || !payload.receivedDate || !payload.inspectedBy){
+          return showMessage('Please fill all required fields','error');
+        }
         showMessage('Submitting...','');
-        const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-        if(!res.ok){const txt=await res.text();throw new Error('Server error: '+res.status+' '+txt);}
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        });
+        if(!res.ok){
+          const txt = await res.text();
+          throw new Error('Server error: '+res.status+' '+txt);
+        }
         await res.json().catch(()=>null);
         showMessage('Submitted successfully','success');
+        // clear localStorage so reload starts fresh
+        localStorage.removeItem(STORAGE_KEY);
+        // reset form visually
         form.reset();
         while(rowsContainer.firstChild) rowsContainer.removeChild(rowsContainer.firstChild);
-        addRowBtn.click();
-      }catch(err){console.error(err);showMessage('Submission failed: '+err.message,'error');}
+        rowsContainer.appendChild(createRow(1));
+        updateRowCount();
+      } catch(err) {
+        console.error(err);
+        showMessage('Submission failed: '+err.message,'error');
+      }
     });
 
     function showMessage(text,type){
       const area=document.getElementById('messageArea');
       area.innerHTML='';
-      if(!text)return;
+      if(!text) return;
       const div=document.createElement('div');
       div.className='msg '+(type==='success'?'success':type==='error'?'error':'');
       div.textContent=text;
@@ -255,12 +331,18 @@
       setTimeout(()=>{area.innerHTML='';},4000);
     }
 
-    document.getElementById('resetBtn').addEventListener('click',()=>{
+    // Reset button clears localStorage too
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
       document.getElementById('damageForm').reset();
       while(rowsContainer.firstChild) rowsContainer.removeChild(rowsContainer.firstChild);
-      addRowBtn.click();
+      rowsContainer.appendChild(createRow(1));
+      updateRowCount();
+      localStorage.removeItem(STORAGE_KEY);
       showMessage('Form reset','');
     });
+
+    // Save state before page unload (extra safety)
+    window.addEventListener('beforeunload', saveState);
   </script>
 </body>
 </html>
