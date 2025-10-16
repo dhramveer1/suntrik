@@ -1,0 +1,117 @@
+<!-- Contact form + minimal theme styles (Tailwind utility classes used) -->
+<!-- Requires Tailwind (CDN) or your own CSS that defines the utility classes used below -->
+<div class="mt-8 max-w-3xl mx-auto slide-up will-change-transform">
+  <form id="contactForm" class="grid grid-cols-1 gap-3">
+    <input id="fullName" name="name" required placeholder="Full name" class="w-full px-4 py-3 rounded border" />
+    <input id="phone" name="phone" required placeholder="Contact No." class="w-full px-4 py-3 rounded border" />
+    <input id="email" name="email" type="email" required placeholder="Email" class="w-full px-4 py-3 rounded border" />
+    <textarea id="message" name="message" rows="4" required placeholder="Tell us about your project" class="w-full px-4 py-3 rounded border"></textarea>
+
+    <div class="text-right">
+      <button id="submitBtn" type="submit" class="inline-flex items-center px-6 py-3 rounded-full bg-orange-500 text-white font-semibold">Send Message</button>
+    </div>
+
+    <div id="formStatus" class="mt-2 text-sm"></div>
+  </form>
+</div>
+
+<!-- Form-related CSS (only what's relevant if you don't use Tailwind) -->
+<style>
+  /* Basic fallback styles if Tailwind isn't available */
+  .w-full{width:100%}
+  .px-4{padding-left:1rem;padding-right:1rem}
+  .py-3{padding-top:.75rem;padding-bottom:.75rem}
+  .rounded{border-radius:.5rem}
+  .rounded-full{border-radius:9999px}
+  .border{border:1px solid #e5e7eb}
+  .text-right{text-align:right}
+  .bg-orange-500{background:#f97316}
+  .text-white{color:#fff}
+  .font-semibold{font-weight:600}
+  .mt-2{margin-top:.5rem}
+  .mt-8{margin-top:2rem}
+  .max-w-3xl{max-width:48rem}
+  .mx-auto{margin-left:auto;margin-right:auto}
+  .grid{display:grid}
+  .grid-cols-1{grid-template-columns:1fr}
+  .gap-3{gap:.75rem}
+  .slide-up{opacity:0;transform:translateY(16px);transition:transform .6s cubic-bezier(.22,.9,.3,1),opacity .5s ease}
+  .slide-up.in-view{opacity:1;transform:none}
+</style>
+
+<!-- JS: sends URL-encoded POST to Apps Script (no preflight) -->
+<script>
+(function initContact() {
+  const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec'; // <-- replace
+  const SECRET = '1211'; // <-- replace or set '' if unused
+
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (!form) { console.error('contactForm element not found'); return; }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    status.textContent = 'Sending…';
+    status.className = 'mt-2 text-sm text-gray-600';
+    if (submitBtn) submitBtn.disabled = true;
+
+    const payload = new URLSearchParams();
+    payload.append('name', document.getElementById('fullName')?.value?.trim() || '');
+    payload.append('phone', document.getElementById('phone')?.value?.trim() || '');
+    payload.append('email', document.getElementById('email')?.value?.trim() || '');
+    payload.append('message', document.getElementById('message')?.value?.trim() || '');
+    if (SECRET) payload.append('secret', SECRET);
+
+    try {
+      console.log('Sending payload to Apps Script:', Object.fromEntries(payload.entries()));
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: payload // Content-Type: application/x-www-form-urlencoded
+      });
+
+      const raw = await res.text();
+      console.log('Raw server response:', raw);
+      let json = null;
+      try { json = JSON.parse(raw); } catch (err) { /* not JSON */ }
+
+      if (!res.ok) {
+        status.textContent = `Server error: ${res.status} ${res.statusText}`;
+        status.className = 'mt-2 text-sm text-red-600';
+        console.error('Server returned non-OK:', raw);
+      } else if (json && json.ok) {
+        status.textContent = '✅ Sent — we received your message.';
+        status.className = 'mt-2 text-sm text-green-600';
+        form.reset();
+      } else {
+        const errMsg = (json && json.error) ? json.error : (raw || 'Unknown server response');
+        status.textContent = '❌ Failed: ' + errMsg;
+        status.className = 'mt-2 text-sm text-red-600';
+        console.error('Unexpected server response:', raw);
+      }
+    } catch (err) {
+      console.error('Fetch exception:', err);
+      status.textContent = '❌ Network / CORS error. See console.';
+      status.className = 'mt-2 text-sm text-red-600';
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+
+  // optional: animate slide-up when in view
+  const first = document.querySelectorAll('.slide-up');
+  if ('IntersectionObserver' in window && first.length) {
+    const obs = new IntersectionObserver((entries, o) => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in-view');
+        o.unobserve(en.target);
+      });
+    }, { threshold: 0.15 });
+    first.forEach(el => obs.observe(el));
+  } else {
+    document.querySelectorAll('.slide-up').forEach(el => el.classList.add('in-view'));
+  }
+})();
+</script>
