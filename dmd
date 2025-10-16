@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Damage Module Receiving Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #f3f4f6; }
+    .module-row { display: flex; gap: 10px; margin-bottom: 8px; }
+    input, select, textarea { border: 1px solid #ccc; border-radius: 6px; padding: 6px; width: 100%; }
+    button { border-radius: 6px; padding: 8px 16px; }
+  </style>
+</head>
+<body class="p-6">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-bold text-center mb-6">Damage Module Receiving Form</h2>
+    <form id="damageForm">
+      
+      <!-- Site Selection -->
+      <label class="block mb-2 font-semibold">Select Site:</label>
+      <select id="site" name="site" required>
+        <option value="">-- Select Site --</option>
+        <option value="Tolasar">Tolasar</option>
+        <option value="Malsar">Malsar</option>
+        <option value="Girghichiya">Girghichiya</option>
+        <option value="Sawar">Sawar</option>
+        <option value="Billyubas">Billyubas</option>
+        <option value="Bhojasar">Bhojasar</option>
+        <option value="Nethrana">Nethrana</option>
+        <option value="Sumeriya">Sumeriya</option>
+      </select>
+
+      <!-- Module Serial Number Rows -->
+      <label class="block mt-4 font-semibold">Module Details:</label>
+      <div id="modulesContainer"></div>
+      <button type="button" id="addModuleBtn" class="bg-blue-600 text-white">+ Add Module</button>
+
+      <!-- Pallet No -->
+      <label class="block mt-4 font-semibold">Pallet No:</label>
+      <input type="text" id="palletNo" name="palletNo" placeholder="Enter Pallet Number" required>
+
+      <!-- Invoice No -->
+      <label class="block mt-4 font-semibold">Invoice No:</label>
+      <input type="text" id="invoiceNo" name="invoiceNo" placeholder="Enter Invoice Number" required>
+
+      <!-- Date -->
+      <label class="block mt-4 font-semibold">Date of Received Modules:</label>
+      <input type="date" id="receivedDate" name="receivedDate" required>
+
+      <!-- Submit -->
+      <div class="mt-6 text-center">
+        <button type="submit" class="bg-green-600 text-white font-semibold">Submit</button>
+      </div>
+    </form>
+
+    <p id="statusMsg" class="mt-4 text-center text-sm"></p>
+  </div>
+
+  <script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxbEhqL1eLnRky2cjAIvUn6E38UaJh4yG67KRJ1cOJMBnKo4_gTzqOHIJMTOHURH-4f/exec";
+
+  const modulesContainer = document.getElementById('modulesContainer');
+  const addModuleBtn = document.getElementById('addModuleBtn');
+  const statusMsg = document.getElementById('statusMsg');
+
+  let moduleCount = 0;
+
+  function addModuleRow() {
+    if (moduleCount >= 10) return alert("Maximum 10 modules allowed");
+    moduleCount++;
+
+    const div = document.createElement('div');
+    div.classList.add('module-row');
+    div.innerHTML = `
+      <input type="text" name="moduleSerial${moduleCount}" placeholder="Module Serial No." required>
+      <input type="text" name="reason${moduleCount}" placeholder="Reason / What is broken" required>
+    `;
+    modulesContainer.appendChild(div);
+  }
+
+  addModuleBtn.addEventListener('click', addModuleRow);
+  addModuleRow(); // Default 1 row
+
+  document.getElementById('damageForm').addEventListener('submit', e => {
+    e.preventDefault();
+    statusMsg.innerText = "⏳ Submitting...";
+    statusMsg.className = "mt-4 text-center text-sm text-blue-600";
+
+    const formData = new FormData(e.target);
+
+    fetch(scriptURL, { method: 'POST', body: formData })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          statusMsg.innerText = "✅ Data submitted successfully!";
+          statusMsg.className = "mt-4 text-center text-sm text-green-600";
+          e.target.reset();
+          modulesContainer.innerHTML = "";
+          moduleCount = 0;
+          addModuleRow();
+        } else {
+          statusMsg.innerText = "⚠️ " + data.message;
+          statusMsg.className = "mt-4 text-center text-sm text-red-600";
+        }
+      })
+      .catch(err => {
+        statusMsg.innerText = "❌ Error: Unable to submit data.";
+        statusMsg.className = "mt-4 text-center text-sm text-red-600";
+      });
+  });
+</script>
+</body>
+</html>
