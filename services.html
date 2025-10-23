@@ -2,213 +2,402 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Report Damaged Module(s)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suntrik — Services</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <meta name="description" content="Suntrik Services — Rooftop EPC, Ground-mounted, BESS, O&M, RESCO, PM-KUSUM and more." />
+
   <style>
-    :root{--card-bg:#fff;--muted:#6b7280;--accent:#0b74de;--danger:#ff6b6b}
-    body{font-family:Inter, Arial, Helvetica, sans-serif;background:#f4f7fb;margin:0;padding:32px;display:flex;justify-content:center}
-    .card{width:920px;background:var(--card-bg);padding:24px;border-radius:10px;box-shadow:0 6px 18px rgba(20,20,30,0.06)}
-    h1{margin:0 0 14px;font-size:28px}
-    label{display:block;font-weight:600;margin:12px 0 6px}
-    select,input[type="text"],input[type="date"],textarea{width:100%;padding:10px;border:1px solid #e3e7ee;border-radius:8px;box-sizing:border-box;font-size:14px}
-    .flex{display:flex;gap:12px}
-    .flex > *{flex:1}
-    .modules{margin-top:6px}
-    .module-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
-    .module-row > input{flex:1;padding:10px;border-radius:8px;border:1px solid #e3e7ee}
-    .index{width:30px;text-align:center;color:var(--muted)}
-    .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-ghost{background:#f1f6fb;color:#111;border:1px solid #e6eef9}
-    .btn-danger{background:var(--danger);color:#fff}
-    .actions{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
-    .hint{color:var(--muted);font-size:13px;margin-top:10px}
-    .message{margin-top:14px;padding:12px;border-radius:8px}
-    .message.success{background:#e6ffef;border:1px solid #b7f0c8;color:#0b662d}
-    .message.error{background:#fff0f0;border:1px solid #f2b8b8;color:#7a1b1b}
-    .footer-note{font-size:12px;color:var(--muted);margin-top:10px}
-    @media (max-width:980px){ .card{width:96%} .module-row{flex-direction:column;align-items:stretch} .index{width:auto;text-align:left} }
+    :root { --header-h: 80px; --accent: #002B5C; --accent2: #FF7A00; }
+    html { scroll-behavior: smooth; }
+    :target:before { content:""; display:block; height:var(--header-h); margin-top:calc(-1 * var(--header-h)); }
+    /* small utilities */
+    .service-card:hover { transform: translateY(-6px); transition: transform .22s ease; }
+    .focus-ring:focus { outline: 3px solid rgba(16,185,129,.18); outline-offset: 2px; }
   </style>
 </head>
-<body>
-  <div class="card" role="main">
-    <h1>Report Damaged Module(s)</h1>
+<body class="antialiased bg-white text-slate-800">
 
-    <!-- Replace this with your /exec URL if different -->
-    <script>const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQIPUXIhtJaA3C8rtLPSxFbZvSNtXJH-JBSeI5VFNDjzZU-rfyhbGhhX3k4iySDd0/exec';</script>
+  <!-- NAVBAR (same pattern as other pages) -->
+  <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="./abc/logo.png" alt="Suntrik logo" class="h-14 w-auto object-contain">
+          <div>
+            <div class="text-2xl md:text-3xl font-extrabold text-[var(--accent)] leading-none">SUNTRIK</div>
+            <div class="text-xs text-slate-500">Clean Energy Solutions</div>
+          </div>
+        </a>
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="index.html" class="hover:text-[#FF7A00]">Home</a>
+          <a href="about.html" class="hover:text-[#FF7A00]">About</a>
+          <a href="services.html" class="hover:text-[#FF7A00]">Services</a>
+          <a href="projects.html" class="hover:text-[#FF7A00]">Projects</a>
+          <a href="Contact.html" class="hover:text-[#FF7A00]">Contact</a>
+          <a href="https://wa.me/919876543210" target="_blank" rel="noopener" 
+             class="ml-4 inline-flex items-center px-5 py-2 rounded-full text-white font-bold bg-gradient-to-r from-green-500 to-green-300 hover:brightness-95">
+            Get Solar
+          </a>
+        </nav>
+<!-- mobile menu button -->
+        <div class="md:hidden">
+          <button id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" class="p-2 rounded-md text-2xl">
+            <span id="menu-open">☰</span>
+            <span id="menu-close" class="hidden">✕</span>
+            <span class="sr-only">Open main menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <form id="damageForm" autocomplete="off">
-      <label for="site">Choose Site</label>
-      <select id="site" required>
-        <option value="">-- Select site --</option>
-        <option>Tolasar</option>
-        <option>Malsar</option>
-        <option>Girghichiya</option>
-        <option>Sawar</option>
-        <option>Billyubas</option>
-        <option>Bhojasar</option>
-        <option>Nethrana</option>
-        <option>Sumeriya</option>
-      </select>
+    <!-- mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t bg-white/98">
+      <div class="px-4 pt-4 pb-6 space-y-3 text-center">
+        <a href="index.html" class="hover:text-[#FF7A00] block">Home</a>
+        <a href="about.html" class="hover:text-[#FF7A00] block">About</a>
+        <a href="services.html" class="hover:text-[#FF7A00] block">Services</a>
+        <a href="projects.html" class="hover:text-[#FF7A00] block">Projects</a>
+        <a href="contact.html" class="hover:text-[#FF7A00] block">Contact</a>
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="block mt-2 px-6 py-2 rounded-full text-white font-semibold bg-green-500">
+          Get Solar
+        </a>
+      </div>
+    </div>
+  </header>
 
-      <div class="flex" style="margin-top:12px">
+  <main class="pt-24">
+
+    <!-- HERO -->
+    <section class="relative bg-[url('./abc/services.jpg')] bg-cover bg-center text-white">
+      <div class="bg-black/50">
+        <div class="max-w-7xl mx-auto px-4 py-20 text-center">
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">Our Services</h1>
+          <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto">Comprehensive solar solutions — EPC, BESS, RESCO, PM-KUSUM and long-term O&M across India.</p>
+          <div class="mt-8 flex justify-center gap-4">
+            <a href="#services-list" class="px-6 py-3 rounded-full bg-white text-[var(--accent)] font-semibold">Explore Services</a>
+            <a href="projects.html" class="px-6 py-3 rounded-full bg-white/10 border border-white/20">See Projects</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES GRID -->
+    <section id="services-list" class="py-14 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <p class="text-sm text-green-700 uppercase font-semibold">What we do</p>
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-2">Full-stack solar & storage services</h2>
+          <p class="mt-2 text-slate-600 max-w-2xl mx-auto">From feasibility to operations — we deliver reliable, finance-backed solar projects with performance guarantees.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Rooftop EPC -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 11l9-7 9 7v7a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">Rooftop Solar EPC</h3>
+                <p class="text-sm text-slate-600 mt-1">Design, supply & installation for residential, commercial and industrial rooftops. Monitoring & warranty included.</p>
+                <div class="mt-3 text-sm">
+                  <strong>Includes:</strong>
+                  <ul class="list-disc ml-5 mt-2 text-slate-600">
+                    <li>Site survey & shade analysis</li>
+                    <li>Structural & electrical design</li>
+                    <li>Module & inverter selection</li>
+                    <li>Commissioning & Net-metering support</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-right">
+              <a href="projects.html" class="text-[var(--accent2)] font-semibold">View related projects →</a>
+            </div>
+          </article>
+
+          <!-- Ground-mounted -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12h18M7 12V5h10v7M9 21h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">Ground-mounted / Utility PV</h3>
+                <p class="text-sm text-slate-600 mt-1">Large scale PV parks with civil, electrical, and SCADA systems for reliable long-life performance.</p>
+                <div class="mt-3 text-sm">
+                  <strong>Includes:</strong>
+                  <ul class="list-disc ml-5 mt-2 text-slate-600">
+                    <li>Foundation & tracker / fixed-tilt design</li>
+                    <li>High-voltage interconnection & substation</li>
+                    <li>Remote SCADA and plant O&M setup</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-right">
+              <a href="projects.html#projects" class="text-[var(--accent2)] font-semibold">See utility projects →</a>
+            </div>
+          </article>
+
+          <!-- BESS -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M6 2h12v16H6zM7 20h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">Battery Energy Storage Systems (BESS)</h3>
+                <p class="text-sm text-slate-600 mt-1">Modular BESS solutions for backup, peak shaving, microgrids and grid services.</p>
+                <div class="mt-3 text-sm">
+                  <strong>Capabilities:</strong>
+                  <ul class="list-disc ml-5 mt-2 text-slate-600">
+                    <li>Li-ion / LFP system integration</li>
+                    <li>Containerized or rack solutions</li>
+                    <li>EMS integration, black-start and islanding</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-right">
+              <a href="projects.html" class="text-[var(--accent2)] font-semibold">Explore BESS projects →</a>
+            </div>
+          </article>
+
+          <!-- O&M / AMC -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2v6M5 12h14M12 22v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">Operations & Maintenance (O&M) / AMC</h3>
+                <p class="text-sm text-slate-600 mt-1">Annual maintenance contracts with predictive maintenance, cleaning, and performance guarantees.</p>
+                <div class="mt-3 text-sm">
+                  <strong>Services:</strong>
+                  <ul class="list-disc ml-5 mt-2 text-slate-600">
+                    <li>Daily remote monitoring & alerts</li>
+                    <li>Monthly/quarterly preventive maintenance</li>
+                    <li>Annual performance audits & reports</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-right">
+              <a href="projects.html" class="text-[var(--accent2)] font-semibold">O&M case studies →</a>
+            </div>
+          </article>
+
+          <!-- RESCO -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">RESCO / Distributed Energy</h3>
+                <p class="text-sm text-slate-600 mt-1">Lease & RESCO models to enable businesses & MSMEs to adopt solar with no upfront CAPEX.</p>
+                <div class="mt-3 text-sm">
+                  <ul class="list-disc ml-5 mt-2 text-slate-600">
+                    <li>Custom commercial models & financing support</li>
+                    <li>Performance SLA and clear billing</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PM-KUSUM -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2l3 7h7l-5 4 2 8-7-5-7 5 2-8L2 9h7l3-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">PM-KUSUM Implementation</h3>
+                <p class="text-sm text-slate-600 mt-1">Project execution for solar pumps & decentralized farmer projects — liaisoning with banks & authorities.</p>
+                <div class="mt-3 text-sm">
+                  <ul class="list-disc ml-5 mt-2 text-slate-600">
+                    <li>Application & sanction support</li>
+                    <li>Installation and farmer training</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 text-right">
+              <a href="projects.html" class="text-[var(--accent2)] font-semibold">PM-KUSUM projects →</a>
+            </div>
+          </article>
+
+          <!-- IPP -->
+          <article class="bg-white rounded-lg shadow p-6 service-card">
+            <div class="flex items-start gap-4">
+              <svg class="w-10 h-10 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 12l9-9 9 9M12 3v18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-800">IPP / Developer Services</h3>
+                <p class="text-sm text-slate-600 mt-1">EPC & advisory services for developers — PPA support, interconnection & commissioning expertise.</p>
+              </div>
+            </div>
+            <div class="mt-4 text-right">
+              <a href="projects.html" class="text-[var(--accent2)] font-semibold">IPP references →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8">
         <div>
-          <label for="pallet">Pallet No.</label>
-          <input id="pallet" type="text" placeholder="Pallet number (optional)" />
+          <h3 class="text-2xl font-bold text-slate-800">Why choose Suntrik?</h3>
+          <ul class="mt-6 grid grid-cols-1 gap-4">
+            <li class="flex items-start gap-3">
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded bg-green-50 text-green-600">✓</span>
+              <div>
+                <strong class="block">End-to-end EPC</strong>
+                <div class="text-sm text-slate-600">From study to commissioning and O&M — single-point responsibility.</div>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded bg-green-50 text-green-600">⚡</span>
+              <div>
+                <strong class="block">BESS & Hybrid expertise</strong>
+                <div class="text-sm text-slate-600">Battery integration for resilience, microgrid, and grid services.</div>
+              </div>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded bg-green-50 text-green-600">🔒</span>
+              <div>
+                <strong class="block">Performance guarantees</strong>
+                <div class="text-sm text-slate-600">SLAs and monitoring to protect your ROI.</div>
+              </div>
+            </li>
+          </ul>
         </div>
         <div>
-          <label for="invoice">Invoice No.</label>
-          <input id="invoice" type="text" placeholder="Invoice number (optional)" />
+          <h3 class="text-2xl font-bold text-slate-800">Our process (simple)</h3>
+          <ol class="mt-6 space-y-4 text-sm text-slate-600">
+            <li><strong>1. Feasibility & Tendering:</strong> Site survey, yield estimates, and financial modelling.</li>
+            <li><strong>2. Design & Procurement:</strong> Civil, electrical, and procurement of BOS equipment.</li>
+            <li><strong>3. Installation & Commissioning:</strong> Safe execution, testing & Net-metering / interconnection.</li>
+            <li><strong>4. O&M & Performance:</strong> Remote monitoring, preventive maintenance and reporting.</li>
+          </ol>
         </div>
       </div>
+    </section>
 
-      <label for="receivedDate">Date Received</label>
-      <input id="receivedDate" type="date" required />
+    <!-- FAQ -->
+    <section class="py-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <h3 class="text-2xl font-bold text-slate-800 text-center">Frequently asked questions</h3>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg shadow p-4">
+            <button class="w-full text-left py-3 px-2 flex justify-between items-center faq-toggle focus-ring">
+              <span class="font-semibold">How long does a rooftop installation take?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body px-2 pb-4 hidden text-sm text-slate-600">
+              Typically 2–4 weeks depending on size, approvals & material lead times.
+            </div>
+          </div>
 
-      <label style="margin-top:12px">Damaged Modules (Serial No. & reason) — up to 10</label>
-      <div id="modulesContainer" class="modules"></div>
+          <div class="bg-white rounded-lg shadow p-4">
+            <button class="w-full text-left py-3 px-2 flex justify-between items-center faq-toggle focus-ring">
+              <span class="font-semibold">Do you provide financing options?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body px-2 pb-4 hidden text-sm text-slate-600">
+              Yes — we support bank tie-ups and RESCO/lease models for qualifying customers.
+            </div>
+          </div>
 
-      <div class="actions">
-        <button type="button" id="addRow" class="btn btn-ghost">+ Add module row</button>
-        <button type="button" id="removeRow" class="btn btn-danger">− Remove last row</button>
+          <div class="bg-white rounded-lg shadow p-4">
+            <button class="w-full text-left py-3 px-2 flex justify-between items-center faq-toggle focus-ring">
+              <span class="font-semibold">What warranties are offered?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body px-2 pb-4 hidden text-sm text-slate-600">
+              Module & inverter manufacturer warranties + workmanship warranty on installation. O&M contracts available for extended support.
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-4">
+            <button class="w-full text-left py-3 px-2 flex justify-between items-center faq-toggle focus-ring">
+              <span class="font-semibold">Can you handle large IPP projects?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body px-2 pb-4 hidden text-sm text-slate-600">
+              Yes — we provide EPC & commissioning services for utility-scale IPP projects including PPA and grid interfacing support.
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div style="margin-top:14px;display:flex;gap:8px;align-items:center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="reset" class="btn btn-ghost">Reset</button>
-        <div id="statusArea" style="flex:1"></div>
+    <!-- CTA -->
+    <section class="py-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="bg-gradient-to-r from-green-700 to-green-500 text-white rounded-lg p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <h4 class="text-xl font-bold">Ready to start a project?</h4>
+            <p class="mt-2 text-sm">Request a free site feasibility & proposal. We’ll respond within 24–48 hours.</p>
+          </div>
+          <div class="flex gap-3">
+            <a href="index.html#contact" class="px-6 py-3 rounded-full bg-white text-green-700 font-semibold">Contact Us</a>
+            <a href="projects.html" class="px-6 py-3 rounded-full border border-white/30">See Projects</a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div id="messageArea" aria-live="polite"></div>
-
-      <p class="footer-note">Notes: Each filled module row will create a row in the selected Google Sheet with (Site, Module Serial, Reason, Pallet No, Invoice No, Date Received, Submitted At).</p>
-    </form>
+    <!-- FOOTER -->
+<footer class="bg-[#002B5C] text-white py-6 px-6">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+    <div class="text-sm">&copy; 2025 Suntrik. All Rights Reserved.</div>
+    <div class="text-sm mt-2 md:mt-0">
+      Designed by 
+      <a href="https://www.linkedin.com/in/veerjoshi" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="font-semibold underline text-white">
+         Dhramveer Joshi
+      </a>
+    </div>
   </div>
-
-<script>
-(function(){
-  const MAX_ROWS = 10;
-  const modulesContainer = document.getElementById('modulesContainer');
-  const addRowBtn = document.getElementById('addRow');
-  const removeRowBtn = document.getElementById('removeRow');
-  const form = document.getElementById('damageForm');
-  const msg = document.getElementById('messageArea');
-  const statusArea = document.getElementById('statusArea');
-
-  function createModuleRow(index){
-    const wrapper = document.createElement('div');
-    wrapper.className = 'module-row';
-    wrapper.dataset.index = index;
-
-    const idx = document.createElement('div');
-    idx.className = 'index';
-    idx.textContent = index;
-
-    const serial = document.createElement('input');
-    serial.type = 'text';
-    serial.placeholder = 'Serial no.';
-    serial.name = `serial_${index}`;
-    serial.autocomplete = 'off';
-
-    const reason = document.createElement('input');
-    reason.type = 'text';
-    reason.placeholder = 'Reason (e.g., glass break)';
-    reason.name = `reason_${index}`;
-    reason.autocomplete = 'off';
-
-    wrapper.appendChild(idx);
-    wrapper.appendChild(serial);
-    wrapper.appendChild(reason);
-    return wrapper;
-  }
-
-  function addRow(){
-    const current = modulesContainer.querySelectorAll('.module-row').length;
-    if (current >= MAX_ROWS) { showMessage('You can add up to ' + MAX_ROWS + ' module rows only.', 'error'); return; }
-    const row = createModuleRow(current + 1);
-    modulesContainer.appendChild(row);
-  }
-
-  function removeRow(){
-    const rows = modulesContainer.querySelectorAll('.module-row');
-    if (rows.length === 0) return;
-    rows[rows.length - 1].remove();
-  }
-
-  function showMessage(txt, type='success'){
-    msg.innerHTML = `<div class="message ${type==='error' ? 'error' : 'success'}">${txt}</div>`;
-    // auto-hide after 7s
-    setTimeout(()=>{ if(msg) msg.innerHTML = ''; }, 7000);
-  }
-
-  // init with 1 row
-  addRow();
-
-  addRowBtn.addEventListener('click', addRow);
-  removeRowBtn.addEventListener('click', removeRow);
-
-  form.addEventListener('submit', async function(e){
-    e.preventDefault();
-    msg.innerHTML = '';
-    statusArea.textContent = '';
-
-    const site = document.getElementById('site').value.trim();
-    const pallet = document.getElementById('pallet').value.trim();
-    const invoice = document.getElementById('invoice').value.trim();
-    const receivedDate = document.getElementById('receivedDate').value;
-
-    if (!site) { showMessage('Please select site.', 'error'); return; }
-    if (!receivedDate) { showMessage('Please choose Date Received.', 'error'); return; }
-
-    // collect module rows
-    const rows = [];
-    document.querySelectorAll('.module-row').forEach(row => {
-      const idx = row.dataset.index;
-      const s = row.querySelector(`input[name="serial_${idx}"]`).value.trim();
-      const r = row.querySelector(`input[name="reason_${idx}"]`).value.trim();
-      if (s) rows.push({serial: s, reason: r});
-    });
-
-    if (rows.length === 0) { showMessage('Add at least one module serial before submitting.', 'error'); return; }
-
-    const payload = { site, pallet, invoice, receivedDate, modules: rows };
-
-    try {
-      // Build FormData to avoid preflight OPTIONS
-      const formData = new FormData();
-      formData.append('payload', JSON.stringify(payload));
-
-      statusArea.textContent = 'Sending...';
-
-      const res = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: formData
+</footer>
+</main>
+  <!-- SCRIPTS -->
+  <script>
+    // mobile menu (same logic)
+    (function () {
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      const openIcon = document.getElementById('menu-open');
+      const closeIcon = document.getElementById('menu-close');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', (!expanded).toString());
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
       });
+    })();
 
-      const text = await res.text();
-      let json = null;
-      try { json = JSON.parse(text); } catch (e) { json = { status: 'error', msg: text || 'Invalid response' }; }
+    // FAQ accordion
+    (function () {
+      const toggles = Array.from(document.querySelectorAll('.faq-toggle'));
+      toggles.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const body = btn.nextElementSibling;
+          const icon = btn.querySelector('.faq-icon');
+          if (!body) return;
+          const isHidden = body.classList.toggle('hidden');
+          icon.textContent = isHidden ? '+' : '–';
+        });
+      });
+    })();
 
-      if (!res.ok || json.status === 'error') {
-        showMessage('Submission failed: ' + (json.msg || ('HTTP ' + res.status)), 'error');
-        statusArea.textContent = '';
-        console.error('Submit error', res.status, text);
-        return;
-      }
-
-      showMessage(json.msg || 'Submitted successfully ✔️', 'success');
-      statusArea.textContent = '';
-      form.reset();
-      modulesContainer.innerHTML = '';
-      addRow(); // reset to one row
-    } catch (err) {
-      console.error(err);
-      showMessage('Submission failed: ' + (err.message || err), 'error');
-      statusArea.textContent = '';
-    }
-  });
-
-})();
-</script>
+    // small helper: add focus styles to buttons/links for keyboard users
+    (function () {
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('blur', () => el.classList.remove('focus-ring'));
+      });
+    })();
+  </script>
 </body>
 </html>
+
